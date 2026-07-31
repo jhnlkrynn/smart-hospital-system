@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Http\Controllers\Dashboard;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
+
+class PharmacistDashboardController extends Controller
+{
+    use DashboardData;
+
+    public function __invoke(Request $request): View
+    {
+        abort_unless($request->user()->can('dashboard.pharmacist'), 403);
+
+        return view('dashboards.pharmacist', $this->dashboardData($request->user(), 'Pharmacist', 'pharmacist'));
+    }
+}

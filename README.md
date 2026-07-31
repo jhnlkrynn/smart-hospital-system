@@ -15,7 +15,54 @@ Phase 2 adds the technical planning layer before implementation of the main modu
 - [Security Plan](docs/security-plan.md)
 - [Development Roadmap](docs/development-roadmap.md)
 
-Next phase: **Phase 3: Roles, Permissions, Role-Based Dashboards, and Demo Accounts**.
+### Phase 3 Access Control
+
+Phase 3 implements role and permission management with Spatie Laravel Permission, account status handling, role-based dashboard redirects, protected dashboard routes, fictional demo users, permission-aware navigation, and authorization tests.
+
+Roles:
+
+- Super Admin
+- Hospital Admin
+- Doctor
+- Nurse
+- Patient
+- Pharmacist
+- Laboratory Staff
+- Cashier
+
+Dashboard URLs:
+
+- `/super-admin/dashboard`
+- `/admin/dashboard`
+- `/doctor/dashboard`
+- `/nurse/dashboard`
+- `/patient/dashboard`
+- `/pharmacist/dashboard`
+- `/laboratory/dashboard`
+- `/cashier/dashboard`
+
+Phase 3 docs:
+
+- [Access Control](docs/access-control.md)
+- [Role Permission Matrix](docs/role-permission-matrix.md)
+- [Demo Accounts](docs/demo-accounts.md)
+- [Dashboard Routing](docs/dashboard-routing.md)
+
+Seed roles, permissions, and development demo users:
+
+```bash
+php artisan db:seed
+```
+
+Run tests:
+
+```bash
+php artisan test
+```
+
+Development-only demo password: `Password123!`. Change or remove demo accounts before deployment.
+
+Next phase: **Phase 4: Department and Employee Management**.
 
 ---
 

@@ -1,0 +1,156 @@
+<?php
+
+namespace App\Support;
+
+final class AccessControl
+{
+    public const DEMO_PASSWORD = 'Password123!';
+
+    public const ROLES = [
+        'super-admin' => 'Super Admin',
+        'hospital-admin' => 'Hospital Admin',
+        'doctor' => 'Doctor',
+        'nurse' => 'Nurse',
+        'patient' => 'Patient',
+        'pharmacist' => 'Pharmacist',
+        'laboratory-staff' => 'Laboratory Staff',
+        'cashier' => 'Cashier',
+    ];
+
+    public const ROLE_DASHBOARDS = [
+        'super-admin' => 'super-admin.dashboard',
+        'hospital-admin' => 'admin.dashboard',
+        'doctor' => 'doctor.dashboard',
+        'nurse' => 'nurse.dashboard',
+        'patient' => 'patient.dashboard',
+        'pharmacist' => 'pharmacist.dashboard',
+        'laboratory-staff' => 'laboratory.dashboard',
+        'cashier' => 'cashier.dashboard',
+    ];
+
+    public const PERMISSIONS = [
+        'users.view', 'users.create', 'users.update', 'users.deactivate', 'users.assign-roles',
+        'roles.view', 'roles.manage', 'permissions.view', 'permissions.manage',
+        'dashboard.super-admin', 'dashboard.hospital-admin', 'dashboard.doctor', 'dashboard.nurse',
+        'dashboard.patient', 'dashboard.pharmacist', 'dashboard.laboratory', 'dashboard.cashier',
+        'departments.view', 'departments.create', 'departments.update', 'departments.archive', 'departments.restore',
+        'employees.view', 'employees.create', 'employees.update', 'employees.archive', 'employees.restore',
+        'patients.view', 'patients.create', 'patients.update', 'patients.archive', 'patients.restore',
+        'patients.view-medical-records', 'patients.view-own-record',
+        'doctor-schedules.view', 'doctor-schedules.create', 'doctor-schedules.update', 'doctor-schedules.manage-own',
+        'appointments.view', 'appointments.view-own', 'appointments.view-assigned', 'appointments.create',
+        'appointments.update', 'appointments.confirm', 'appointments.cancel', 'appointments.reschedule', 'appointments.check-in',
+        'queues.view', 'queues.manage', 'queues.call', 'queues.recall', 'queues.skip', 'queues.transfer', 'queues.complete', 'queues.view-own-status',
+        'triage.view', 'triage.create', 'triage.update',
+        'vital-signs.view', 'vital-signs.create', 'vital-signs.update',
+        'consultations.view', 'consultations.view-assigned', 'consultations.create', 'consultations.update', 'consultations.finalize', 'consultations.amend',
+        'medical-records.view', 'medical-records.view-own', 'medical-records.create', 'medical-records.update', 'medical-records.amend', 'medical-records.download-files',
+        'diagnoses.view', 'diagnoses.create', 'diagnoses.update', 'diagnoses.archive',
+        'laboratory-tests.view', 'laboratory-tests.manage',
+        'laboratory-requests.view', 'laboratory-requests.view-own', 'laboratory-requests.create', 'laboratory-requests.accept',
+        'laboratory-requests.process', 'laboratory-requests.cancel',
+        'laboratory-results.view', 'laboratory-results.view-own', 'laboratory-results.create', 'laboratory-results.update', 'laboratory-results.release',
+        'prescriptions.view', 'prescriptions.view-own', 'prescriptions.create', 'prescriptions.cancel', 'prescriptions.dispense',
+        'medicines.view', 'medicines.create', 'medicines.update', 'medicines.archive',
+        'medicine-batches.view', 'medicine-batches.manage',
+        'suppliers.view', 'suppliers.manage',
+        'inventory.view', 'inventory.manage', 'inventory.adjust', 'inventory.view-reports',
+        'dispensing.view', 'dispensing.manage',
+        'bills.view', 'bills.view-own', 'bills.create', 'bills.update-draft', 'bills.finalize', 'bills.adjust', 'bills.cancel',
+        'payments.view', 'payments.view-own', 'payments.create', 'payments.verify', 'payments.refund', 'payments.print-receipt',
+        'notifications.view', 'notifications.manage-own',
+        'announcements.view', 'announcements.manage',
+        'reports.view', 'reports.export', 'reports.financial', 'reports.clinical', 'reports.inventory', 'reports.audit',
+        'audit-logs.view',
+        'settings.view', 'settings.manage',
+        'symptom-checker.use', 'symptom-checker.view-own-history',
+    ];
+
+    public const ROLE_PERMISSIONS = [
+        'super-admin' => self::PERMISSIONS,
+        'hospital-admin' => [
+            'dashboard.hospital-admin',
+            'users.view', 'users.create', 'users.update',
+            'departments.view', 'departments.create', 'departments.update', 'departments.archive', 'departments.restore',
+            'employees.view', 'employees.create', 'employees.update', 'employees.archive', 'employees.restore',
+            'patients.view', 'patients.create', 'patients.update', 'patients.archive', 'patients.restore',
+            'doctor-schedules.view', 'doctor-schedules.create', 'doctor-schedules.update',
+            'appointments.view', 'appointments.create', 'appointments.update', 'appointments.confirm', 'appointments.cancel', 'appointments.reschedule',
+            'queues.view',
+            'announcements.view', 'announcements.manage',
+            'reports.view', 'reports.export',
+            'settings.view',
+            'notifications.view',
+        ],
+        'doctor' => [
+            'dashboard.doctor',
+            'doctor-schedules.view', 'doctor-schedules.manage-own',
+            'appointments.view-assigned',
+            'patients.view', 'patients.view-medical-records',
+            'consultations.view-assigned', 'consultations.create', 'consultations.update', 'consultations.finalize', 'consultations.amend',
+            'medical-records.view', 'medical-records.create', 'medical-records.update', 'medical-records.amend', 'medical-records.download-files',
+            'diagnoses.view', 'diagnoses.create', 'diagnoses.update',
+            'laboratory-tests.view', 'laboratory-requests.view', 'laboratory-requests.create', 'laboratory-results.view',
+            'prescriptions.view', 'prescriptions.create', 'prescriptions.cancel',
+            'notifications.view',
+        ],
+        'nurse' => [
+            'dashboard.nurse',
+            'patients.view', 'patients.create', 'patients.update',
+            'appointments.view', 'appointments.check-in',
+            'queues.view', 'queues.manage', 'queues.call', 'queues.recall', 'queues.skip', 'queues.transfer', 'queues.complete',
+            'triage.view', 'triage.create', 'triage.update',
+            'vital-signs.view', 'vital-signs.create', 'vital-signs.update',
+            'notifications.view',
+        ],
+        'patient' => [
+            'dashboard.patient',
+            'patients.view-own-record', 'patients.update',
+            'appointments.view-own', 'appointments.create', 'appointments.cancel', 'appointments.reschedule',
+            'queues.view-own-status',
+            'laboratory-results.view-own',
+            'prescriptions.view-own',
+            'bills.view-own',
+            'payments.view-own',
+            'notifications.view', 'notifications.manage-own',
+            'symptom-checker.use', 'symptom-checker.view-own-history',
+        ],
+        'pharmacist' => [
+            'dashboard.pharmacist',
+            'prescriptions.view', 'prescriptions.dispense',
+            'medicines.view', 'medicines.create', 'medicines.update', 'medicines.archive',
+            'medicine-batches.view', 'medicine-batches.manage',
+            'suppliers.view', 'suppliers.manage',
+            'inventory.view', 'inventory.manage', 'inventory.adjust', 'inventory.view-reports',
+            'dispensing.view', 'dispensing.manage',
+            'reports.view', 'reports.inventory',
+            'notifications.view',
+        ],
+        'laboratory-staff' => [
+            'dashboard.laboratory',
+            'laboratory-tests.view', 'laboratory-tests.manage',
+            'laboratory-requests.view', 'laboratory-requests.accept', 'laboratory-requests.process', 'laboratory-requests.cancel',
+            'laboratory-results.view', 'laboratory-results.create', 'laboratory-results.update', 'laboratory-results.release',
+            'reports.view', 'reports.clinical',
+            'notifications.view',
+        ],
+        'cashier' => [
+            'dashboard.cashier',
+            'bills.view', 'bills.create', 'bills.update-draft', 'bills.finalize', 'bills.adjust', 'bills.cancel',
+            'payments.view', 'payments.create', 'payments.verify', 'payments.refund', 'payments.print-receipt',
+            'reports.view', 'reports.financial',
+            'notifications.view',
+        ],
+    ];
+
+    public const DEMO_USERS = [
+        ['name' => 'Samantha Reyes', 'email' => 'superadmin@hospital.test', 'role' => 'super-admin'],
+        ['name' => 'Adrian Santos', 'email' => 'admin@hospital.test', 'role' => 'hospital-admin'],
+        ['name' => 'Dr. Miguel Navarro', 'email' => 'doctor@hospital.test', 'role' => 'doctor'],
+        ['name' => 'Angela Cruz', 'email' => 'nurse@hospital.test', 'role' => 'nurse'],
+        ['name' => 'Paolo Mendoza', 'email' => 'patient@hospital.test', 'role' => 'patient'],
+        ['name' => 'Rica Villanueva', 'email' => 'pharmacist@hospital.test', 'role' => 'pharmacist'],
+        ['name' => 'Daniel Garcia', 'email' => 'laboratory@hospital.test', 'role' => 'laboratory-staff'],
+        ['name' => 'Marianne Flores', 'email' => 'cashier@hospital.test', 'role' => 'cashier'],
+    ];
+}
