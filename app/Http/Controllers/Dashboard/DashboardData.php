@@ -31,9 +31,12 @@ trait DashboardData
                 'Demo access accounts',
                 'Patient management and QR identification',
                 'Doctor schedules and appointment booking',
+                'Queue management, triage, and vital signs',
+                'Consultations, diagnoses, and patient medical records',
             ],
             'appointmentMetrics' => $this->appointmentMetrics($user, $roleSlug),
             'queueMetrics' => $this->queueMetrics($user, $roleSlug),
+            'consultationMetrics' => $this->consultationMetrics($user, $roleSlug),
         ];
     }
 
@@ -90,6 +93,35 @@ trait DashboardData
             'called' => (clone $query)->where('status', 'called')->count(),
             'triaged' => (clone $query)->where('status', 'triaged')->count(),
             'completed' => (clone $query)->where('status', 'completed')->count(),
+        ];
+    }
+
+    /**
+     * @return array<string, int>
+     */
+    private function consultationMetrics(User $user, string $roleSlug): array
+    {
+        if (! Schema::hasTable('consultations')) {
+            return [];
+        }
+
+        $query = DB::table('consultations')->whereNull('deleted_at');
+
+        if ($roleSlug === 'doctor' && $user->employee) {
+            $query->where('doctor_employee_id', $user->employee->id);
+        }
+
+        if ($roleSlug === 'patient' && $user->patient) {
+            $query->where('patient_id', $user->patient->id)->where('is_patient_visible', true);
+        }
+
+        return [
+            'in_progress' => (clone $query)->whereIn('status', ['in_progress', 'reopened', 'paused'])->count(),
+            'completed_today' => (clone $query)->whereDate('completed_at', now('Asia/Manila')->toDateString())->count(),
+            'completed_total' => (clone $query)->where('status', 'completed')->count(),
+            'certificates_issued' => Schema::hasTable('medical_certificates')
+                ? DB::table('medical_certificates')->whereNull('deleted_at')->where('status', 'issued')->when($roleSlug === 'doctor' && $user->employee, fn ($q) => $q->where('doctor_employee_id', $user->employee->id))->when($roleSlug === 'patient' && $user->patient, fn ($q) => $q->where('patient_id', $user->patient->id))->count()
+                : 0,
         ];
     }
 }

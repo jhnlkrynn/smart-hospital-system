@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Dashboard\PatientDashboardController;
+use App\Http\Controllers\Patient\MedicalRecordController;
 use App\Http\Controllers\Patient\PatientAppointmentController;
 use App\Http\Controllers\Patient\PatientProfileController;
 use App\Http\Controllers\Patient\PatientQueueController;
@@ -40,4 +41,10 @@ Route::middleware(['auth', 'verified', 'account.active', 'role:patient', 'permis
         Route::get('/queues', [PatientQueueController::class, 'index'])
             ->middleware('permission:queues.view-own-status')
             ->name('queues.index');
+        Route::get('/medical-records', [MedicalRecordController::class, 'index'])
+            ->middleware('permission:medical-records.view-own')
+            ->name('medical-records.index');
+        Route::get('/medical-records/{consultation}', [MedicalRecordController::class, 'show'])
+            ->middleware('permission:medical-records.view-own')
+            ->name('medical-records.show');
     });

@@ -81,6 +81,21 @@
                 </section>
             @endif
 
+            @if (! empty($consultationMetrics))
+                <section>
+                    <div class="mb-4 flex items-center justify-between gap-4">
+                        <h2 class="text-lg font-semibold text-gray-950">Consultation Metrics</h2>
+                        <span class="text-sm text-gray-500">Clinical records</span>
+                    </div>
+                    <div class="grid gap-4 md:grid-cols-4">
+                        <div class="rounded-lg border bg-white p-4 shadow-sm"><dt class="text-sm text-gray-500">In Progress</dt><dd class="mt-2 text-2xl font-semibold">{{ $consultationMetrics['in_progress'] }}</dd></div>
+                        <div class="rounded-lg border bg-white p-4 shadow-sm"><dt class="text-sm text-gray-500">Completed Today</dt><dd class="mt-2 text-2xl font-semibold">{{ $consultationMetrics['completed_today'] }}</dd></div>
+                        <div class="rounded-lg border bg-white p-4 shadow-sm"><dt class="text-sm text-gray-500">Completed Total</dt><dd class="mt-2 text-2xl font-semibold">{{ $consultationMetrics['completed_total'] }}</dd></div>
+                        <div class="rounded-lg border bg-white p-4 shadow-sm"><dt class="text-sm text-gray-500">Issued Certificates</dt><dd class="mt-2 text-2xl font-semibold">{{ $consultationMetrics['certificates_issued'] }}</dd></div>
+                    </div>
+                </section>
+            @endif
+
             <section>
                 <div class="mb-4 flex items-center justify-between gap-4">
                     <h2 class="text-lg font-semibold text-gray-950">Accessible Work Areas</h2>

@@ -83,6 +83,11 @@ class PatientQueue extends Model
         return $this->hasMany(VitalSign::class, 'queue_id');
     }
 
+    public function consultation(): HasOne
+    {
+        return $this->hasOne(Consultation::class, 'queue_entry_id');
+    }
+
     public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');

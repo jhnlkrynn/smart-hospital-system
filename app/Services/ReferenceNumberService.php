@@ -29,6 +29,16 @@ class ReferenceNumberService
         return $this->generate(strtoupper($departmentCode), $date, 3);
     }
 
+    public function consultationNumber(): string
+    {
+        return $this->generate('CON', now('Asia/Manila')->format('Y'), 6);
+    }
+
+    public function medicalCertificateNumber(): string
+    {
+        return $this->generate('MEDCERT', now('Asia/Manila')->format('Y'), 6);
+    }
+
     public function generate(string $prefix, string $period, int $padding = 6): string
     {
         return DB::transaction(function () use ($prefix, $period, $padding): string {

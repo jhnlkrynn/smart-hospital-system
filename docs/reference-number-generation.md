@@ -42,6 +42,26 @@ DEPT-YYYYMMDD-001
 
 The department code is the prefix, and the date uses the Asia/Manila timezone. Queue numbers are generated when an appointment is checked in or a walk-in patient is added to the queue.
 
+## Consultation Numbers
+
+Format:
+
+```text
+CON-YYYY-000001
+```
+
+The consultation number is generated when a doctor starts a clinical encounter from a queue entry.
+
+## Medical Certificate Numbers
+
+Format:
+
+```text
+MEDCERT-YYYY-000001
+```
+
+The certificate number is generated when a doctor creates a medical certificate draft.
+
 ## Collision Prevention
 
 The service uses the `reference_sequences` table:

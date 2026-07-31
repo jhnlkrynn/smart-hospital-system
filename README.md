@@ -139,7 +139,29 @@ Queue and triage routes:
 - `/doctor/queues`
 - `/patient/queues`
 
-Next phase: **Phase 8: Consultations, Diagnoses, and Electronic Medical Records**.
+### Phase 8 Consultations, Diagnoses, and Electronic Medical Records
+
+Phase 8 adds doctor consultation records, diagnosis snapshots, diagnosis catalog management, patient problem-list sync, private consultation attachments, medical certificates, patient-visible EMR timelines, consultation dashboard metrics, audit logging, seeders, factories, tests, and documentation.
+
+Phase 8 docs:
+
+- [Consultation Management](docs/consultation-management.md)
+- [Electronic Medical Records](docs/electronic-medical-records.md)
+- [Diagnosis Management](docs/diagnosis-management.md)
+- [Patient Problem List](docs/patient-problem-list.md)
+- [Medical Certificates](docs/medical-certificates.md)
+- [Consultation File Security](docs/consultation-file-security.md)
+- [Consultation Status Workflow](docs/consultation-status-workflow.md)
+- [Patient Record Privacy](docs/patient-record-privacy.md)
+
+Clinical routes:
+
+- `/doctor/consultations`
+- `/admin/consultations`
+- `/admin/diagnosis-catalog`
+- `/patient/medical-records`
+
+Next phase: **Phase 9: Laboratory Requests and Results**.
 
 ---
 

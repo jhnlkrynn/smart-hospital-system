@@ -30,11 +30,12 @@ Generated reference numbers must be unique and indexed. They should be produced 
 | queue_status_histories | Queue status audit | queue_id, old_status, new_status, changed_by, notes | FK queue; index queue/created_at | Append-style transition history |
 | triage_records | Triage assessment | queue_id, appointment_id, patient_id, nurse_id, chief_complaint, pain_scale, pregnancy_flag, fall_risk_score, fall_risk_level, acuity, allergy review | FKs queue/appointment/patient/nurse; index patient/created_at | Soft delete; preserve clinical intake |
 | vital_signs | Vitals | queue_id, triage_record_id, patient_id, recorded_by, BP, pulse, respiration, temperature, SpO2, height, weight, BMI, measured_at | FKs queue/triage/patient/user; index patient/measured_at | Soft delete; BMI server-calculated |
-| consultations | Doctor encounter | consultation_number, appointment_id, patient_id, doctor_id, status, subjective, objective, assessment, plan, finalized_at | unique consultation_number; unique appointment_id; indexes doctor/status | Finalized records require amendments |
-| medical_records | Longitudinal record entries | patient_id, consultation_id, record_type, summary, details, created_by, finalized_at | FKs patient/consultation/user; index patient/type | No hard delete |
-| medical_record_amendments | Amendments | medical_record_id, amended_by, reason, old_values, new_values | FK medical_record restrict; index record | Append-only |
-| diagnoses | Diagnosis catalog | code, name, description, is_active | unique code; index name | Restrict when used |
-| consultation_diagnoses | Diagnoses per consult | consultation_id, diagnosis_id, type, notes | composite unique consultation/diagnosis/type | No soft delete |
+| diagnosis_catalog | Diagnosis catalog | code, name, description, category, is_active, is_patient_visible_default | unique code; indexes name/category/active | Soft delete; diagnosis snapshots preserve historical text |
+| consultations | Doctor encounter | consultation_number, queue_entry_id, appointment_id, patient_id, doctor_employee_id, department_id, status, clinical notes, patient_summary, visibility flags | unique consultation_number; unique queue_entry_id; indexes patient/completed, doctor/status, department/status | Soft delete; completed records are read-only until reopened |
+| consultation_diagnoses | Diagnoses per consult | consultation_id, diagnosis_catalog_id, code/name snapshots, type, status, notes, visibility, problem-list sync flag | FKs consultation/catalog/user; index consultation/type | Soft delete; snapshots preserve clinical history |
+| patient_problems | Longitudinal problem list | patient_id, diagnosis_catalog_id, source_consultation_diagnosis_id, problem name/code, status, onset/resolution, visibility | indexes patient/status | Soft delete; duplicate active problems prevented in service |
+| consultation_attachments | Private clinical files | consultation_id, title, original/stored filename, disk/path, mime, size, confidentiality, visibility | index consultation/visible | Private local storage; controller-mediated download |
+| medical_certificates | Doctor-issued certificates | certificate_number, consultation_id, patient_id, doctor_employee_id, status, purpose, summary, recommendation, issue/void metadata | unique certificate_number; indexes patient/status, doctor/status | Soft delete; issue and void are audited |
 | laboratory_test_definitions | Lab test catalog | code, name, category, sample_type, price, turnaround_hours, is_active | unique code; indexes category/is_active | Restrict when used |
 | laboratory_requests | Lab orders | lab_request_number, consultation_id, patient_id, doctor_id, status, requested_at, released_at | unique lab_request_number; indexes patient/status | No hard delete |
 | laboratory_request_items | Ordered lab tests | laboratory_request_id, laboratory_test_definition_id, status, specimen_collected_at, notes | FKs request/test; unique request/test | No hard delete |
@@ -69,7 +70,8 @@ Generated reference numbers must be unique and indexed. They should be produced 
 | Employee Number | `EMP-2026-000001` |
 | Appointment Number | `APT-20260731-0001` |
 | Queue Number | `GEN-001` per department/date |
-| Consultation Number | `CON-20260731-0001` |
+| Consultation Number | `CON-2026-000001` |
+| Medical Certificate Number | `MEDCERT-2026-000001` |
 | Laboratory Request | `LAB-20260731-0001` |
 | Prescription Number | `RX-20260731-0001` |
 | Dispensing Number | `DSP-20260731-0001` |
@@ -117,3 +119,14 @@ Phase 7 adds:
 - `queue_status_histories` for queue status transitions.
 - `triage_records` for nurse clinical intake data.
 - `vital_signs` for BP, pulse, respiration, temperature, oxygen saturation, height, weight, and BMI.
+
+## Phase 8 Implemented Tables
+
+Phase 8 adds:
+
+- `diagnosis_catalog` for reusable diagnosis metadata.
+- `consultations` for doctor encounter records linked to queue and appointment workflows.
+- `consultation_diagnoses` for encounter-specific diagnosis snapshots.
+- `patient_problems` for longitudinal problem-list sync.
+- `consultation_attachments` for private clinical file metadata.
+- `medical_certificates` for draft, issued, and void certificate records.

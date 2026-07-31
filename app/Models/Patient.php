@@ -91,6 +91,21 @@ class Patient extends Model
         return $this->hasMany(VitalSign::class);
     }
 
+    public function consultations(): HasMany
+    {
+        return $this->hasMany(Consultation::class);
+    }
+
+    public function problems(): HasMany
+    {
+        return $this->hasMany(PatientProblem::class);
+    }
+
+    public function medicalCertificates(): HasMany
+    {
+        return $this->hasMany(MedicalCertificate::class);
+    }
+
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('status', PatientStatus::Active->value);

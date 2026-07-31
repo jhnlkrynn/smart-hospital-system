@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\ConsultationController as AdminConsultationController;
+use App\Http\Controllers\Admin\DiagnosisCatalogController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\AppointmentController;
 use App\Http\Controllers\Admin\AppointmentTypeController;
@@ -198,5 +200,19 @@ Route::middleware(['auth', 'verified', 'account.active'])->group(function (): vo
             Route::post('queues/{queue}/cancel', [QueueController::class, 'cancel'])
                 ->middleware('permission:queues.manage')
                 ->name('queues.cancel');
+
+            Route::get('consultations', [AdminConsultationController::class, 'index'])
+                ->middleware('permission:consultations.view-all')
+                ->name('consultations.index');
+            Route::get('consultations/{consultation}', [AdminConsultationController::class, 'show'])
+                ->middleware('permission:consultations.view-all')
+                ->name('consultations.show');
+            Route::post('consultations/{consultation}/reopen', [AdminConsultationController::class, 'reopen'])
+                ->middleware('permission:consultations.reopen')
+                ->name('consultations.reopen');
+
+            Route::resource('diagnosis-catalog', DiagnosisCatalogController::class)
+                ->except(['show'])
+                ->middleware('permission:diagnoses.manage-catalog');
         });
 });

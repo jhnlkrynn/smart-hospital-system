@@ -1,0 +1,1 @@
+<x-app-layout><x-slot name="header"><h2 class="text-2xl font-semibold text-gray-950">Edit Diagnosis</h2></x-slot><div class="py-8"><div class="mx-auto max-w-3xl px-4">@include('admin.diagnosis-catalog.form', ['action' => route('admin.diagnosis-catalog.update', $diagnosis), 'method' => 'PUT'])</div></div></x-app-layout>

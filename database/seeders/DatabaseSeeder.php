@@ -28,6 +28,8 @@ class DatabaseSeeder extends Seeder
             AppointmentSeeder::class,
             QueueSeeder::class,
             TriageSeeder::class,
+            DiagnosisCatalogSeeder::class,
+            ConsultationSeeder::class,
         ]);
     }
 }

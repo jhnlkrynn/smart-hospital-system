@@ -77,6 +77,11 @@ class Appointment extends Model
         return $this->hasOne(PatientQueue::class);
     }
 
+    public function consultation(): HasOne
+    {
+        return $this->hasOne(Consultation::class);
+    }
+
     public function cancelledBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'cancelled_by');

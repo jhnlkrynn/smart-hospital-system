@@ -29,6 +29,10 @@ Super Admin has full schedule and appointment access. Hospital Admin can manage 
 
 Nurses manage queue check-in, walk-ins, calling, triage, and vital-sign recording. Doctors view and complete their own assigned doctor queue. Patients view only their own queue status. Queue numbers, queue priorities, status timestamps, triage actors, and BMI are generated or enforced server-side.
 
+## Phase 8 Clinical Record Access
+
+Doctors start and complete assigned consultations, manage diagnoses, upload clinical attachments, and issue medical certificates for their own encounter records. Hospital Admins can view and reopen consultation records for operational review but cannot edit doctor-owned notes. Patients can view only their own finalized, patient-visible EMR timeline and issued certificates. Pharmacists, Laboratory Staff, and Cashiers do not receive detailed consultation access.
+
 ## Sensitive Permission Checks
 
 | Permission | Super Admin | Hospital Admin | Doctor | Nurse | Patient | Pharmacist | Laboratory Staff | Cashier |
@@ -47,6 +51,11 @@ Nurses manage queue check-in, walk-ins, calling, triage, and vital-sign recordin
 | `appointments.view-own` | Yes | No | No | No | Yes | No | No | No |
 | `medical-records.view` | Yes | No | Yes, assigned | No | No | No | No | No |
 | `medical-records.view-own` | Yes | No | No | No | Yes | No | No | No |
+| `consultations.start` | Yes | No | Yes, assigned | No | No | No | No | No |
+| `consultations.view-all` | Yes | Yes | No | No | No | No | No | No |
+| `diagnoses.manage-catalog` | Yes | Yes | No | No | No | No | No | No |
+| `clinical-attachments.download` | Yes | No | Yes, assigned | No | No | No | No | No |
+| `medical-certificates.issue` | Yes | No | Yes, assigned | No | No | No | No | No |
 | `payments.verify` | Yes | No | No | No | No | No | No | Yes |
 | `payments.refund` | Yes | No | No | No | No | No | No | Yes |
 | `inventory.adjust` | Yes | No | No | No | No | Yes | No | No |

@@ -74,6 +74,11 @@ class Employee extends Model
         return $this->hasMany(PatientQueue::class, 'doctor_employee_id');
     }
 
+    public function consultations(): HasMany
+    {
+        return $this->hasMany(Consultation::class, 'doctor_employee_id');
+    }
+
     public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
