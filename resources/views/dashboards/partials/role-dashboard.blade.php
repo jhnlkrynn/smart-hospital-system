@@ -96,6 +96,22 @@
                 </section>
             @endif
 
+            @if (! empty($laboratoryMetrics))
+                <section>
+                    <div class="mb-4 flex items-center justify-between gap-4">
+                        <h2 class="text-lg font-semibold text-gray-950">Laboratory Metrics</h2>
+                        <span class="text-sm text-gray-500">Live workflow</span>
+                    </div>
+                    <div class="grid gap-4 md:grid-cols-5">
+                        <div class="rounded-lg border bg-white p-4 shadow-sm"><dt class="text-sm text-gray-500">New Today</dt><dd class="mt-2 text-2xl font-semibold">{{ $laboratoryMetrics['new_requests_today'] }}</dd></div>
+                        <div class="rounded-lg border bg-white p-4 shadow-sm"><dt class="text-sm text-gray-500">Specimen Pending</dt><dd class="mt-2 text-2xl font-semibold">{{ $laboratoryMetrics['specimen_pending'] }}</dd></div>
+                        <div class="rounded-lg border bg-white p-4 shadow-sm"><dt class="text-sm text-gray-500">In Process</dt><dd class="mt-2 text-2xl font-semibold">{{ $laboratoryMetrics['in_process'] }}</dd></div>
+                        <div class="rounded-lg border bg-white p-4 shadow-sm"><dt class="text-sm text-gray-500">Released Today</dt><dd class="mt-2 text-2xl font-semibold">{{ $laboratoryMetrics['released_today'] }}</dd></div>
+                        <div class="rounded-lg border bg-white p-4 shadow-sm"><dt class="text-sm text-gray-500">Critical Open</dt><dd class="mt-2 text-2xl font-semibold">{{ $laboratoryMetrics['critical_open'] }}</dd></div>
+                    </div>
+                </section>
+            @endif
+
             <section>
                 <div class="mb-4 flex items-center justify-between gap-4">
                     <h2 class="text-lg font-semibold text-gray-950">Accessible Work Areas</h2>

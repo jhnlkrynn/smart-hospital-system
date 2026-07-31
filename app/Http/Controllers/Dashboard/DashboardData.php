@@ -37,6 +37,7 @@ trait DashboardData
             'appointmentMetrics' => $this->appointmentMetrics($user, $roleSlug),
             'queueMetrics' => $this->queueMetrics($user, $roleSlug),
             'consultationMetrics' => $this->consultationMetrics($user, $roleSlug),
+            'laboratoryMetrics' => $this->laboratoryMetrics($user, $roleSlug),
         ];
     }
 
@@ -122,6 +123,38 @@ trait DashboardData
             'certificates_issued' => Schema::hasTable('medical_certificates')
                 ? DB::table('medical_certificates')->whereNull('deleted_at')->where('status', 'issued')->when($roleSlug === 'doctor' && $user->employee, fn ($q) => $q->where('doctor_employee_id', $user->employee->id))->when($roleSlug === 'patient' && $user->patient, fn ($q) => $q->where('patient_id', $user->patient->id))->count()
                 : 0,
+        ];
+    }
+
+    /**
+     * @return array<string, int>
+     */
+    private function laboratoryMetrics(User $user, string $roleSlug): array
+    {
+        if (! Schema::hasTable('laboratory_requests')) {
+            return [];
+        }
+
+        $today = now('Asia/Manila')->toDateString();
+        $requests = DB::table('laboratory_requests')->whereNull('deleted_at');
+        $results = Schema::hasTable('laboratory_results') ? DB::table('laboratory_results')->whereNull('deleted_at') : null;
+
+        if ($roleSlug === 'doctor' && $user->employee) {
+            $requests->where('requesting_doctor_employee_id', $user->employee->id);
+            $results?->whereIn('laboratory_request_id', DB::table('laboratory_requests')->where('requesting_doctor_employee_id', $user->employee->id)->pluck('id'));
+        }
+
+        if ($roleSlug === 'patient' && $user->patient) {
+            $requests->where('patient_id', $user->patient->id);
+            $results?->where('patient_id', $user->patient->id)->where('is_patient_visible', true);
+        }
+
+        return [
+            'new_requests_today' => (clone $requests)->whereDate('requested_at', $today)->count(),
+            'specimen_pending' => (clone $requests)->whereIn('status', ['specimen_pending', 'recollection_required'])->count(),
+            'in_process' => (clone $requests)->whereIn('status', ['in_process', 'partially_completed'])->count(),
+            'released_today' => $results ? (clone $results)->whereDate('released_at', $today)->count() : 0,
+            'critical_open' => $results ? (clone $results)->where('is_critical', true)->whereNotNull('released_at')->count() : 0,
         ];
     }
 }

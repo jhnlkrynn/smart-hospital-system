@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\ConsultationController as AdminConsultationController;
 use App\Http\Controllers\Admin\DiagnosisCatalogController;
 use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\Admin\LaboratoryCatalogController;
 use App\Http\Controllers\Admin\AppointmentController;
 use App\Http\Controllers\Admin\AppointmentTypeController;
 use App\Http\Controllers\Admin\DoctorScheduleController;
@@ -214,5 +215,21 @@ Route::middleware(['auth', 'verified', 'account.active'])->group(function (): vo
             Route::resource('diagnosis-catalog', DiagnosisCatalogController::class)
                 ->except(['show'])
                 ->middleware('permission:diagnoses.manage-catalog');
+
+            Route::get('laboratory/catalog', [LaboratoryCatalogController::class, 'index'])
+                ->middleware('permission:laboratory-tests.view')
+                ->name('laboratory.catalog.index');
+            Route::post('laboratory/categories', [LaboratoryCatalogController::class, 'storeCategory'])
+                ->middleware('permission:laboratory-tests.create')
+                ->name('laboratory.categories.store');
+            Route::post('laboratory/specimen-types', [LaboratoryCatalogController::class, 'storeSpecimenType'])
+                ->middleware('permission:laboratory-tests.create')
+                ->name('laboratory.specimen-types.store');
+            Route::post('laboratory/tests', [LaboratoryCatalogController::class, 'storeTest'])
+                ->middleware('permission:laboratory-tests.create')
+                ->name('laboratory.tests.store');
+            Route::post('laboratory/tests/{test}/reference-ranges', [LaboratoryCatalogController::class, 'addReferenceRange'])
+                ->middleware('permission:laboratory-tests.manage-reference-ranges')
+                ->name('laboratory.tests.reference-ranges.store');
         });
 });

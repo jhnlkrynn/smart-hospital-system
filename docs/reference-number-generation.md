@@ -62,6 +62,26 @@ MEDCERT-YYYY-000001
 
 The certificate number is generated when a doctor creates a medical certificate draft.
 
+## Laboratory Request Numbers
+
+Format:
+
+```text
+LAB-YYYYMMDD-0001
+```
+
+The request number is generated when a doctor creates a laboratory request from an assigned consultation.
+
+## Laboratory Accession Numbers
+
+Format:
+
+```text
+ACC-YYYYMMDD-00001
+```
+
+The accession number is generated when laboratory staff collect a specimen. Barcode values are separate random identifiers and must not contain private patient data.
+
 ## Collision Prevention
 
 The service uses the `reference_sequences` table:

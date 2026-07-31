@@ -33,6 +33,10 @@ Nurses manage queue check-in, walk-ins, calling, triage, and vital-sign recordin
 
 Doctors start and complete assigned consultations, manage diagnoses, upload clinical attachments, and issue medical certificates for their own encounter records. Hospital Admins can view and reopen consultation records for operational review but cannot edit doctor-owned notes. Patients can view only their own finalized, patient-visible EMR timeline and issued certificates. Pharmacists, Laboratory Staff, and Cashiers do not receive detailed consultation access.
 
+## Phase 9 Laboratory Access
+
+Hospital Admins and Super Admins can manage laboratory catalog metadata. Doctors create requests from assigned consultations and review released assigned results, but cannot enter, verify, or release values. Laboratory Staff can collect specimens, enter results, verify, release, amend, and upload result attachments according to assigned permissions. Patients can view only their own released patient-visible results. Cashiers and Pharmacists do not receive full laboratory workflow access.
+
 ## Sensitive Permission Checks
 
 | Permission | Super Admin | Hospital Admin | Doctor | Nurse | Patient | Pharmacist | Laboratory Staff | Cashier |

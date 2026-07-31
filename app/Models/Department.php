@@ -51,6 +51,11 @@ class Department extends Model
         return $this->hasMany(Consultation::class);
     }
 
+    public function laboratoryRequests(): HasMany
+    {
+        return $this->hasMany(LaboratoryRequest::class);
+    }
+
     public function activeEmployees(): HasMany
     {
         return $this->employees()->active();

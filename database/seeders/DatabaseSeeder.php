@@ -30,6 +30,10 @@ class DatabaseSeeder extends Seeder
             TriageSeeder::class,
             DiagnosisCatalogSeeder::class,
             ConsultationSeeder::class,
+            SpecimenTypeSeeder::class,
+            LaboratoryTestCategorySeeder::class,
+            LaboratoryTestSeeder::class,
+            LaboratoryReferenceRangeSeeder::class,
         ]);
     }
 }

@@ -106,6 +106,16 @@ class Patient extends Model
         return $this->hasMany(MedicalCertificate::class);
     }
 
+    public function laboratoryRequests(): HasMany
+    {
+        return $this->hasMany(LaboratoryRequest::class);
+    }
+
+    public function laboratoryResults(): HasMany
+    {
+        return $this->hasMany(LaboratoryResult::class);
+    }
+
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('status', PatientStatus::Active->value);

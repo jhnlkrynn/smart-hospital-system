@@ -39,6 +39,16 @@ class ReferenceNumberService
         return $this->generate('MEDCERT', now('Asia/Manila')->format('Y'), 6);
     }
 
+    public function laboratoryRequestNumber(): string
+    {
+        return $this->generate('LAB', now('Asia/Manila')->format('Ymd'), 4);
+    }
+
+    public function laboratoryAccessionNumber(): string
+    {
+        return $this->generate('ACC', now('Asia/Manila')->format('Ymd'), 5);
+    }
+
     public function generate(string $prefix, string $period, int $padding = 6): string
     {
         return DB::transaction(function () use ($prefix, $period, $padding): string {

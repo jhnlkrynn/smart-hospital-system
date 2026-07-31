@@ -36,6 +36,20 @@ Generated reference numbers must be unique and indexed. They should be produced 
 | patient_problems | Longitudinal problem list | patient_id, diagnosis_catalog_id, source_consultation_diagnosis_id, problem name/code, status, onset/resolution, visibility | indexes patient/status | Soft delete; duplicate active problems prevented in service |
 | consultation_attachments | Private clinical files | consultation_id, title, original/stored filename, disk/path, mime, size, confidentiality, visibility | index consultation/visible | Private local storage; controller-mediated download |
 | medical_certificates | Doctor-issued certificates | certificate_number, consultation_id, patient_id, doctor_employee_id, status, purpose, summary, recommendation, issue/void metadata | unique certificate_number; indexes patient/status, doctor/status | Soft delete; issue and void are audited |
+| specimen_types | Specimen catalog | code, name, instructions, storage requirements, active flag | unique code/name | Soft delete; historical links preserved |
+| laboratory_test_categories | Test grouping | code, name, display order, active flag | unique code/name; display order index | Soft delete |
+| laboratory_tests | Laboratory test catalog | category, code, name, result type, unit, specimen type, fasting/verifier/panel flags | unique code; category/name/active indexes | Soft delete; inactive tests unavailable for new requests |
+| laboratory_test_components | Panel components | parent_test_id, component_test_id, order, required flag | unique parent/component | One-level panel expansion |
+| laboratory_reference_ranges | Reference metadata | test, sex, age days, bounds, critical bounds, text reference, unit, effective dates | test/active index | Soft delete; demonstration data unless verified |
+| laboratory_requests | Doctor lab request | request_number, consultation, patient, doctor, department, priority, status, clinical info, timestamps | unique request_number; patient/doctor/status indexes | Soft delete; no force-delete route |
+| laboratory_request_items | Test items | request, test, snapshots, specimen type, priority, status | request/status index | Soft delete; item-level status |
+| laboratory_specimens | Collected specimens | accession_number, request, patient, specimen type, status, actor timestamps, barcode | unique accession/barcode; request/patient/status indexes | Soft delete; rejected accession numbers retained |
+| laboratory_specimen_items | Specimen mapping | specimen_id, request_item_id | unique specimen/item | Cross-request mapping blocked by service |
+| laboratory_results | Result values | request item, request, patient, test, typed values, range snapshots, abnormal flag, verification/release metadata | unique request item; patient/released indexes | Soft delete; released values amended through history |
+| laboratory_result_versions | Amendment history | result, version, snapshot, reason, actor | unique result/version | Append-style amendment history |
+| laboratory_result_attachments | Private files | result, title, storage metadata, confidentiality, visibility | result indexes | Private storage |
+| laboratory_result_acknowledgments | Doctor review | result, doctor, actor, acknowledged_at | unique result/doctor | Prevent duplicate acknowledgment |
+| laboratory_critical_result_logs | Critical handling | result, request, patient, doctor, identified/communicated metadata | doctor/communication index | Internal communication log |
 | laboratory_test_definitions | Lab test catalog | code, name, category, sample_type, price, turnaround_hours, is_active | unique code; indexes category/is_active | Restrict when used |
 | laboratory_requests | Lab orders | lab_request_number, consultation_id, patient_id, doctor_id, status, requested_at, released_at | unique lab_request_number; indexes patient/status | No hard delete |
 | laboratory_request_items | Ordered lab tests | laboratory_request_id, laboratory_test_definition_id, status, specimen_collected_at, notes | FKs request/test; unique request/test | No hard delete |
@@ -73,6 +87,7 @@ Generated reference numbers must be unique and indexed. They should be produced 
 | Consultation Number | `CON-2026-000001` |
 | Medical Certificate Number | `MEDCERT-2026-000001` |
 | Laboratory Request | `LAB-20260731-0001` |
+| Laboratory Accession | `ACC-20260731-00001` |
 | Prescription Number | `RX-20260731-0001` |
 | Dispensing Number | `DSP-20260731-0001` |
 | Bill Number | `BILL-20260731-0001` |
@@ -130,3 +145,7 @@ Phase 8 adds:
 - `patient_problems` for longitudinal problem-list sync.
 - `consultation_attachments` for private clinical file metadata.
 - `medical_certificates` for draft, issued, and void certificate records.
+
+## Phase 9 Implemented Tables
+
+Phase 9 adds laboratory catalog, request, specimen, result, amendment, attachment, acknowledgment, and critical-result communication tables. Result values are stored as typed columns with reference-range snapshots and patient visibility controls.

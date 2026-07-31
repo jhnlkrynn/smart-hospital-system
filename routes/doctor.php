@@ -8,6 +8,7 @@ use App\Http\Controllers\Doctor\DoctorAppointmentController;
 use App\Http\Controllers\Doctor\DoctorQueueController;
 use App\Http\Controllers\Doctor\DoctorScheduleController;
 use App\Http\Controllers\Doctor\MedicalCertificateController;
+use App\Http\Controllers\Doctor\LaboratoryRequestController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified', 'account.active', 'role:doctor', 'permission:dashboard.doctor'])
@@ -85,4 +86,20 @@ Route::middleware(['auth', 'verified', 'account.active', 'role:doctor', 'permiss
         Route::post('/consultations/{consultation}/medical-certificates/{certificate}/void', [MedicalCertificateController::class, 'voidCertificate'])
             ->middleware('permission:medical-certificates.void')
             ->name('consultations.certificates.void');
+
+        Route::get('/laboratory-requests', [LaboratoryRequestController::class, 'index'])
+            ->middleware('permission:laboratory-requests.view-assigned')
+            ->name('laboratory-requests.index');
+        Route::get('/consultations/{consultation}/laboratory-requests/create', [LaboratoryRequestController::class, 'create'])
+            ->middleware('permission:laboratory-requests.create')
+            ->name('consultations.laboratory-requests.create');
+        Route::post('/consultations/{consultation}/laboratory-requests', [LaboratoryRequestController::class, 'store'])
+            ->middleware('permission:laboratory-requests.create')
+            ->name('consultations.laboratory-requests.store');
+        Route::get('/laboratory-requests/{laboratoryRequest}', [LaboratoryRequestController::class, 'show'])
+            ->middleware('permission:laboratory-requests.view-assigned')
+            ->name('laboratory-requests.show');
+        Route::post('/laboratory-results/{result}/acknowledge', [LaboratoryRequestController::class, 'acknowledge'])
+            ->middleware('permission:laboratory-results.acknowledge')
+            ->name('laboratory-results.acknowledge');
     });

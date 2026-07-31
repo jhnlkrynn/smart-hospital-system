@@ -161,7 +161,30 @@ Clinical routes:
 - `/admin/diagnosis-catalog`
 - `/patient/medical-records`
 
-Next phase: **Phase 9: Laboratory Requests and Results**.
+### Phase 9 Laboratory Requests and Results
+
+Phase 9 adds laboratory catalog management, specimen types, reference ranges, doctor-created laboratory requests from consultations, specimen collection and accession numbers, result entry, abnormal and critical flags, verification, release, amendments, critical acknowledgments, patient-visible released results, dashboards, tests, seeders, factories, and documentation.
+
+Phase 9 docs:
+
+- [Laboratory Management](docs/laboratory-management.md)
+- [Laboratory Test Catalog](docs/laboratory-test-catalog.md)
+- [Laboratory Request Workflow](docs/laboratory-request-workflow.md)
+- [Specimen Management](docs/specimen-management.md)
+- [Laboratory Result Workflow](docs/laboratory-result-workflow.md)
+- [Laboratory Reference Ranges](docs/laboratory-reference-ranges.md)
+- [Critical Result Management](docs/critical-result-management.md)
+- [Laboratory Result Security](docs/laboratory-result-security.md)
+- [Laboratory Reporting](docs/laboratory-reporting.md)
+
+Laboratory routes:
+
+- `/admin/laboratory/catalog`
+- `/doctor/laboratory-requests`
+- `/laboratory/requests`
+- `/patient/laboratory-results`
+
+Next phase: **Phase 10: Prescriptions and Pharmacy Inventory**.
 
 ---
 
