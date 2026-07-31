@@ -1,3 +1,24 @@
+## Smart Hospital Management System
+
+This Laravel application is being developed as a modular Smart Hospital Management System. Phase 1 established the working Laravel project, XAMPP database connection, Laravel Breeze authentication, frontend dependencies, migrations, and Git repository.
+
+Phase 2 adds the technical planning layer before implementation of the main modules. The planned architecture uses Blade, Tailwind CSS, Alpine.js, controllers, Form Requests, policies, service classes, PHP enums, Eloquent models, migrations, seeders, audit logging, and MySQL/MariaDB-backed normalized data.
+
+### Phase 2 Documentation
+
+- [Architecture](docs/architecture.md)
+- [Database Design](docs/database-design.md)
+- [Entity Relationship Diagram](docs/entity-relationship-diagram.md)
+- [Module Dependencies](docs/module-dependencies.md)
+- [Permission Matrix](docs/permission-matrix.md)
+- [Route Plan](docs/route-plan.md)
+- [Security Plan](docs/security-plan.md)
+- [Development Roadmap](docs/development-roadmap.md)
+
+Next phase: **Phase 3: Roles, Permissions, Role-Based Dashboards, and Demo Accounts**.
+
+---
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">

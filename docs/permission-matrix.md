@@ -1,0 +1,73 @@
+# Permission Matrix
+
+Legend: `Full` means unrestricted within the application. `Dept` means department-limited. `Assigned` means records assigned to the user through schedule, appointment, queue, prescription, lab request, or job role. `Own` means the user's own patient/account records. `None` means no access.
+
+| Permission | Super Admin | Hospital Admin | Doctor | Nurse | Patient | Pharmacist | Laboratory Staff | Cashier |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| users.view | Full | Dept | None | None | Own | None | None | None |
+| users.create | Full | Dept | None | None | None | None | None | None |
+| users.update | Full | Dept | None | None | Own | None | None | None |
+| users.deactivate | Full | Dept | None | None | None | None | None | None |
+| roles.view | Full | None | None | None | None | None | None | None |
+| roles.manage | Full | None | None | None | None | None | None | None |
+| departments.view | Full | Full | Dept | Dept | None | Dept | Dept | Dept |
+| departments.create | Full | Full | None | None | None | None | None | None |
+| departments.update | Full | Full | None | None | None | None | None | None |
+| departments.archive | Full | Full | None | None | None | None | None | None |
+| employees.view | Full | Dept | Dept | Assigned | None | Assigned | Assigned | Assigned |
+| employees.create | Full | Dept | None | None | None | None | None | None |
+| employees.update | Full | Dept | None | None | None | None | None | None |
+| employees.archive | Full | Dept | None | None | None | None | None | None |
+| patients.view | Full | Full | Assigned | Assigned | Own | Assigned | Assigned | Assigned |
+| patients.create | Full | Full | None | Full | Own | None | None | None |
+| patients.update | Full | Full | Assigned | Assigned | Own | None | None | None |
+| patients.archive | Full | Full | None | None | None | None | None | None |
+| patients.view-medical-records | Full | None | Assigned | Limited | Own | None | Limited | None |
+| appointments.view | Full | Full | Assigned | Dept | Own | None | None | None |
+| appointments.create | Full | Full | Assigned | Dept | Own | None | None | None |
+| appointments.update | Full | Full | Assigned | Dept | Own | None | None | None |
+| appointments.confirm | Full | Full | Assigned | Dept | None | None | None | None |
+| appointments.cancel | Full | Full | Assigned | Dept | Own | None | None | None |
+| appointments.reschedule | Full | Full | Assigned | Dept | Own | None | None | None |
+| queues.view | Full | Full | Assigned | Dept | Own | None | None | None |
+| queues.manage | Full | Full | None | Dept | None | None | None | None |
+| queues.call | Full | Full | None | Dept | None | None | None | None |
+| queues.transfer | Full | Full | None | Dept | None | None | None | None |
+| queues.complete | Full | Full | Assigned | Dept | None | None | None | None |
+| triage.view | Full | Full | Assigned | Dept | Own | None | None | None |
+| triage.create | Full | Full | None | Dept | None | None | None | None |
+| triage.update | Full | Full | None | Dept | None | None | None | None |
+| consultations.view | Full | None | Assigned | Limited | Own | None | Limited | None |
+| consultations.create | Full | None | Assigned | None | None | None | None | None |
+| consultations.update | Full | None | Assigned | None | None | None | None | None |
+| consultations.finalize | Full | None | Assigned | None | None | None | None | None |
+| consultations.amend | Full | None | Assigned | None | None | None | None | None |
+| laboratory-requests.view | Full | Full | Assigned | Limited | Own | None | Assigned | Billing |
+| laboratory-requests.create | Full | None | Assigned | None | None | None | None | None |
+| laboratory-requests.process | Full | None | None | None | None | None | Assigned | None |
+| laboratory-results.create | Full | None | None | None | None | None | Assigned | None |
+| laboratory-results.release | Full | None | None | None | None | None | Assigned | None |
+| prescriptions.view | Full | None | Assigned | Limited | Own | Assigned | None | Billing |
+| prescriptions.create | Full | None | Assigned | None | None | None | None | None |
+| prescriptions.cancel | Full | None | Assigned | None | None | None | None | None |
+| medicines.view | Full | Full | Limited | None | None | Full | None | Billing |
+| medicines.create | Full | None | None | None | None | Full | None | None |
+| medicines.update | Full | None | None | None | None | Full | None | None |
+| inventory.manage | Full | None | None | None | None | Full | None | None |
+| inventory.adjust | Full | None | None | None | None | Full | None | None |
+| dispensing.manage | Full | None | None | None | None | Full | None | Billing |
+| bills.view | Full | Full | None | None | Own | None | None | Full |
+| bills.create | Full | None | None | None | None | None | None | Full |
+| bills.finalize | Full | None | None | None | None | None | None | Full |
+| bills.adjust | Full | None | None | None | None | None | None | Full |
+| payments.view | Full | Full | None | None | Own | None | None | Full |
+| payments.create | Full | None | None | None | None | None | None | Full |
+| payments.verify | Full | None | None | None | None | None | None | Full |
+| payments.refund | Full | None | None | None | None | None | None | Full |
+| reports.view | Full | Full | Assigned | Dept | None | Dept | Dept | Full |
+| reports.export | Full | Full | None | None | None | Dept | Dept | Full |
+| audit-logs.view | Full | None | None | None | None | None | None | None |
+| announcements.manage | Full | Full | None | None | None | None | None | None |
+| settings.manage | Full | None | None | None | None | None | None | None |
+
+`Limited` access must be enforced by policy and scoped queries. For example, nurses may see triage-relevant clinical facts but not full consultation narratives; laboratory staff may see lab-order context but not unrelated medical history; cashiers may see billing labels and totals but not detailed private records.
