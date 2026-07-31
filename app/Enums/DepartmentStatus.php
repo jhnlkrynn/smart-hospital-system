@@ -2,20 +2,16 @@
 
 namespace App\Enums;
 
-enum EmploymentStatus: string
+enum DepartmentStatus: string
 {
     case Active = 'active';
-    case OnLeave = 'on_leave';
     case Inactive = 'inactive';
-    case Terminated = 'terminated';
 
     public function label(): string
     {
         return match ($this) {
             self::Active => 'Active',
-            self::OnLeave => 'On Leave',
             self::Inactive => 'Inactive',
-            self::Terminated => 'Terminated',
         };
     }
 }

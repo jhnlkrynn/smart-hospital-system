@@ -13,6 +13,10 @@ The canonical implementation lives in `app/Support/AccessControl.php`.
 | Laboratory Staff | Laboratory dashboard, test definitions, laboratory requests, specimen processing, result entry/update/release, clinical lab reports, and notifications. No unrelated medical or financial records. |
 | Cashier | Cashier dashboard, bills, payments, receipt printing, financial reports, and notifications. No detailed medical records, consultation notes, or prescription administration. |
 
+## Phase 4 Employee Profile Access
+
+Doctors, nurses, pharmacists, laboratory staff, cashiers, hospital admins, and super admins may view their own employee profile through `/profile/employment`. This own-profile route does not grant employee-management permissions. Patient users have no employee-management access.
+
 ## Sensitive Permission Checks
 
 | Permission | Super Admin | Hospital Admin | Doctor | Nurse | Patient | Pharmacist | Laboratory Staff | Cashier |

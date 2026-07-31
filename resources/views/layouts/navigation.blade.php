@@ -14,6 +14,11 @@
         ['permission' => 'dashboard.laboratory', 'route' => 'laboratory.dashboard', 'label' => 'Laboratory'],
         ['permission' => 'dashboard.cashier', 'route' => 'cashier.dashboard', 'label' => 'Cashier'],
     ];
+
+    $adminLinks = [
+        ['permission' => 'departments.view', 'route' => 'admin.departments.index', 'label' => 'Departments'],
+        ['permission' => 'employees.view', 'route' => 'admin.employees.index', 'label' => 'Employees'],
+    ];
 @endphp
 
 <nav x-data="{ open: false }" class="border-b border-gray-200 bg-white">
@@ -29,6 +34,13 @@
                     @foreach ($dashboardLinks as $link)
                         @can($link['permission'])
                             <x-nav-link :href="route($link['route'])" :active="request()->routeIs($link['route'])">
+                                {{ $link['label'] }}
+                            </x-nav-link>
+                        @endcan
+                    @endforeach
+                    @foreach ($adminLinks as $link)
+                        @can($link['permission'])
+                            <x-nav-link :href="route($link['route'])" :active="request()->routeIs($link['route'].'*')">
                                 {{ $link['label'] }}
                             </x-nav-link>
                         @endcan
@@ -54,6 +66,9 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">{{ __('Profile') }}</x-dropdown-link>
+                        @if ($user->employee)
+                            <x-dropdown-link :href="route('profile.employment')">{{ __('Employment Profile') }}</x-dropdown-link>
+                        @endif
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
@@ -85,6 +100,13 @@
                     </x-responsive-nav-link>
                 @endcan
             @endforeach
+            @foreach ($adminLinks as $link)
+                @can($link['permission'])
+                    <x-responsive-nav-link :href="route($link['route'])" :active="request()->routeIs($link['route'].'*')">
+                        {{ $link['label'] }}
+                    </x-responsive-nav-link>
+                @endcan
+            @endforeach
         </div>
 
         <div class="border-t border-gray-200 px-4 py-3">
@@ -92,6 +114,9 @@
             <div class="text-sm text-gray-500">{{ $user->email }} · {{ $roleLabel }}</div>
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">{{ __('Profile') }}</x-responsive-nav-link>
+                @if ($user->employee)
+                    <x-responsive-nav-link :href="route('profile.employment')">{{ __('Employment Profile') }}</x-responsive-nav-link>
+                @endif
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">

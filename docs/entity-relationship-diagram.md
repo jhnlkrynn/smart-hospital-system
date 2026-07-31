@@ -6,6 +6,7 @@ erDiagram
     USERS ||--o| PATIENTS : owns
     USERS ||--o{ AUDIT_LOGS : performs
     DEPARTMENTS ||--o{ EMPLOYEES : has
+    EMPLOYEES ||--o| DEPARTMENTS : heads
     EMPLOYEES ||--o{ DOCTOR_SCHEDULES : doctor_has
     EMPLOYEES ||--o{ DOCTOR_UNAVAILABLE_DATES : doctor_blocks
     EMPLOYEES ||--o{ APPOINTMENTS : doctor_assigned

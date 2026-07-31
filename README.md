@@ -62,7 +62,24 @@ php artisan test
 
 Development-only demo password: `Password123!`. Change or remove demo accounts before deployment.
 
-Next phase: **Phase 4: Department and Employee Management**.
+### Phase 4 Department and Employee Management
+
+Phase 4 adds department CRUD, employee account/profile CRUD, employee number generation, profile photo validation, archiving/restoration, staff own-profile access, audit logging, seeders, factories, policies, and automated tests.
+
+Phase 4 docs:
+
+- [Department Management](docs/department-management.md)
+- [Employee Management](docs/employee-management.md)
+- [Employee Role Rules](docs/employee-role-rules.md)
+- [Reference Number Generation](docs/reference-number-generation.md)
+
+Administrative routes:
+
+- `/admin/departments`
+- `/admin/employees`
+- `/profile/employment`
+
+Next phase: **Phase 5: Patient Management and QR Patient Identification**.
 
 ---
 

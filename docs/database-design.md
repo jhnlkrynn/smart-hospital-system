@@ -77,3 +77,14 @@ Generated reference numbers must be unique and indexed. They should be produced 
 | Payment Reference | `PAY-20260731-0001` |
 
 Collision prevention: lock the sequence row inside a transaction, increment atomically, format with date/year and prefix, insert under a unique constraint, and retry on unique-key conflict.
+
+## Phase 4 Implemented Tables
+
+Phase 4 adds:
+
+- `reference_sequences` for locked reference-number counters.
+- `departments` with unique `code` and `name`, nullable department head, status, creator/updater references, timestamps, and soft deletes.
+- `employees` with unique `employee_number`, unique `user_id`, department assignment, personal/professional/emergency-contact fields, profile photo path, status/type enums, creator/updater references, timestamps, and soft deletes.
+- `audit_logs` for append-only administrative audit records.
+
+The department-head foreign key is intentionally added after `employees` exists to avoid a circular migration dependency.
