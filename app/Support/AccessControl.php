@@ -37,6 +37,9 @@ final class AccessControl
         'employees.view', 'employees.create', 'employees.update', 'employees.archive', 'employees.restore',
         'patients.view', 'patients.create', 'patients.update', 'patients.archive', 'patients.restore',
         'patients.view-medical-records', 'patients.view-own-record',
+        'patients.manage-emergency-contacts', 'patients.manage-allergies', 'patients.manage-conditions',
+        'patients.manage-documents', 'patients.download-documents', 'patients.view-qr', 'patients.lookup-qr',
+        'patients.update-own-profile',
         'doctor-schedules.view', 'doctor-schedules.create', 'doctor-schedules.update', 'doctor-schedules.manage-own',
         'appointments.view', 'appointments.view-own', 'appointments.view-assigned', 'appointments.create',
         'appointments.update', 'appointments.confirm', 'appointments.cancel', 'appointments.reschedule', 'appointments.check-in',
@@ -74,6 +77,8 @@ final class AccessControl
             'departments.view', 'departments.create', 'departments.update', 'departments.archive', 'departments.restore',
             'employees.view', 'employees.create', 'employees.update', 'employees.archive', 'employees.restore',
             'patients.view', 'patients.create', 'patients.update', 'patients.archive', 'patients.restore',
+            'patients.manage-emergency-contacts', 'patients.manage-allergies', 'patients.manage-conditions',
+            'patients.manage-documents', 'patients.download-documents', 'patients.view-qr', 'patients.lookup-qr',
             'doctor-schedules.view', 'doctor-schedules.create', 'doctor-schedules.update',
             'appointments.view', 'appointments.create', 'appointments.update', 'appointments.confirm', 'appointments.cancel', 'appointments.reschedule',
             'queues.view',
@@ -87,6 +92,7 @@ final class AccessControl
             'doctor-schedules.view', 'doctor-schedules.manage-own',
             'appointments.view-assigned',
             'patients.view', 'patients.view-medical-records',
+            'patients.manage-allergies', 'patients.manage-conditions', 'patients.view-qr', 'patients.lookup-qr',
             'consultations.view-assigned', 'consultations.create', 'consultations.update', 'consultations.finalize', 'consultations.amend',
             'medical-records.view', 'medical-records.create', 'medical-records.update', 'medical-records.amend', 'medical-records.download-files',
             'diagnoses.view', 'diagnoses.create', 'diagnoses.update',
@@ -97,6 +103,8 @@ final class AccessControl
         'nurse' => [
             'dashboard.nurse',
             'patients.view', 'patients.create', 'patients.update',
+            'patients.manage-emergency-contacts', 'patients.manage-allergies', 'patients.manage-conditions',
+            'patients.view-qr', 'patients.lookup-qr',
             'appointments.view', 'appointments.check-in',
             'queues.view', 'queues.manage', 'queues.call', 'queues.recall', 'queues.skip', 'queues.transfer', 'queues.complete',
             'triage.view', 'triage.create', 'triage.update',
@@ -106,6 +114,7 @@ final class AccessControl
         'patient' => [
             'dashboard.patient',
             'patients.view-own-record', 'patients.update',
+            'patients.update-own-profile', 'patients.manage-emergency-contacts', 'patients.view-qr',
             'appointments.view-own', 'appointments.create', 'appointments.cancel', 'appointments.reschedule',
             'queues.view-own-status',
             'laboratory-results.view-own',
@@ -118,6 +127,7 @@ final class AccessControl
         'pharmacist' => [
             'dashboard.pharmacist',
             'prescriptions.view', 'prescriptions.dispense',
+            'patients.view', 'patients.lookup-qr',
             'medicines.view', 'medicines.create', 'medicines.update', 'medicines.archive',
             'medicine-batches.view', 'medicine-batches.manage',
             'suppliers.view', 'suppliers.manage',
@@ -128,6 +138,7 @@ final class AccessControl
         ],
         'laboratory-staff' => [
             'dashboard.laboratory',
+            'patients.view', 'patients.lookup-qr',
             'laboratory-tests.view', 'laboratory-tests.manage',
             'laboratory-requests.view', 'laboratory-requests.accept', 'laboratory-requests.process', 'laboratory-requests.cancel',
             'laboratory-results.view', 'laboratory-results.create', 'laboratory-results.update', 'laboratory-results.release',
@@ -136,6 +147,7 @@ final class AccessControl
         ],
         'cashier' => [
             'dashboard.cashier',
+            'patients.view',
             'bills.view', 'bills.create', 'bills.update-draft', 'bills.finalize', 'bills.adjust', 'bills.cancel',
             'payments.view', 'payments.create', 'payments.verify', 'payments.refund', 'payments.print-receipt',
             'reports.view', 'reports.financial',

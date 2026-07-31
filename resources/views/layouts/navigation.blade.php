@@ -18,6 +18,13 @@
     $adminLinks = [
         ['permission' => 'departments.view', 'route' => 'admin.departments.index', 'label' => 'Departments'],
         ['permission' => 'employees.view', 'route' => 'admin.employees.index', 'label' => 'Employees'],
+        ['permission' => 'patients.view', 'route' => 'admin.patients.index', 'label' => 'Patients'],
+        ['permission' => 'patients.lookup-qr', 'route' => 'patient-lookup.index', 'label' => 'Patient QR Lookup'],
+    ];
+
+    $patientLinks = [
+        ['permission' => 'patients.view-own-record', 'route' => 'patient.profile.show', 'label' => 'My Patient Profile'],
+        ['permission' => 'patients.view-qr', 'route' => 'patient.qr-card', 'label' => 'My QR Card'],
     ];
 @endphp
 
@@ -43,6 +50,15 @@
                             <x-nav-link :href="route($link['route'])" :active="request()->routeIs($link['route'].'*')">
                                 {{ $link['label'] }}
                             </x-nav-link>
+                        @endcan
+                    @endforeach
+                    @foreach ($patientLinks as $link)
+                        @can($link['permission'])
+                            @if (Route::has($link['route']))
+                                <x-nav-link :href="route($link['route'])" :active="request()->routeIs($link['route'])">
+                                    {{ $link['label'] }}
+                                </x-nav-link>
+                            @endif
                         @endcan
                     @endforeach
                 </div>
@@ -105,6 +121,15 @@
                     <x-responsive-nav-link :href="route($link['route'])" :active="request()->routeIs($link['route'].'*')">
                         {{ $link['label'] }}
                     </x-responsive-nav-link>
+                @endcan
+            @endforeach
+            @foreach ($patientLinks as $link)
+                @can($link['permission'])
+                    @if (Route::has($link['route']))
+                        <x-responsive-nav-link :href="route($link['route'])" :active="request()->routeIs($link['route'])">
+                            {{ $link['label'] }}
+                        </x-responsive-nav-link>
+                    @endif
                 @endcan
             @endforeach
         </div>

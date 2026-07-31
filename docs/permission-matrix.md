@@ -22,6 +22,14 @@ Legend: `Full` means unrestricted within the application. `Dept` means departmen
 | patients.create | Full | Full | None | Full | Own | None | None | None |
 | patients.update | Full | Full | Assigned | Assigned | Own | None | None | None |
 | patients.archive | Full | Full | None | None | None | None | None | None |
+| patients.manage-emergency-contacts | Full | Full | None | Assigned | Own | None | None | None |
+| patients.manage-allergies | Full | Full | Assigned | Assigned | None | None | None | None |
+| patients.manage-conditions | Full | Full | Assigned | Assigned | None | None | None | None |
+| patients.manage-documents | Full | Full | None | Assigned | None | None | None | None |
+| patients.download-documents | Full | Full | None | None | None | None | None | None |
+| patients.view-qr | Full | Full | Assigned | Assigned | Own | Assigned | None | None |
+| patients.lookup-qr | Full | Full | Assigned | Assigned | None | Assigned | Assigned | None |
+| patients.update-own-profile | None | None | None | None | Own | None | None | None |
 | patients.view-medical-records | Full | None | Assigned | Limited | Own | None | Limited | None |
 | appointments.view | Full | Full | Assigned | Dept | Own | None | None | None |
 | appointments.create | Full | Full | Assigned | Dept | Own | None | None | None |

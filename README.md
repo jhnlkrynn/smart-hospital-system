@@ -79,7 +79,26 @@ Administrative routes:
 - `/admin/employees`
 - `/profile/employment`
 
-Next phase: **Phase 5: Patient Management and QR Patient Identification**.
+### Phase 5 Patient Management and QR Identification
+
+Phase 5 adds patient registration, patient self-profile management, emergency contacts, allergies, conditions, private document metadata/uploads, patient numbers, QR card generation, authorized QR lookup, token regeneration, seed data, policies, factories, audit logging, and tests.
+
+Phase 5 docs:
+
+- [Patient Management](docs/patient-management.md)
+- [Patient Registration](docs/patient-registration.md)
+- [Patient Privacy Rules](docs/patient-privacy-rules.md)
+- [QR Patient Identification](docs/qr-patient-identification.md)
+- [Patient Document Security](docs/patient-document-security.md)
+
+Administrative and patient routes:
+
+- `/admin/patients`
+- `/patient/profile`
+- `/patient/qr-card`
+- `/patient-lookup`
+
+Next phase: **Phase 6: Doctor Schedules and Appointments**.
 
 ---
 

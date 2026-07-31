@@ -14,6 +14,9 @@ erDiagram
     PATIENTS ||--o{ PATIENT_ALLERGIES : has
     PATIENTS ||--o{ PATIENT_CONDITIONS : has
     PATIENTS ||--o{ PATIENT_DOCUMENTS : has
+    USERS ||--o{ PATIENT_DOCUMENTS : uploads
+    USERS ||--o{ PATIENT_ALLERGIES : records
+    USERS ||--o{ PATIENT_CONDITIONS : records
     PATIENTS ||--o{ APPOINTMENTS : books
     DOCTOR_SCHEDULES ||--o{ APPOINTMENTS : provides_slot
     APPOINTMENTS ||--o| QUEUES : creates

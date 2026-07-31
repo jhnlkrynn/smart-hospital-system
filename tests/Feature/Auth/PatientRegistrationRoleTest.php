@@ -18,7 +18,11 @@ class PatientRegistrationRoleTest extends TestCase
         $this->seedAccessControl();
 
         $this->post('/register', [
-            'name' => 'Public Patient',
+            'first_name' => 'Public',
+            'last_name' => 'Patient',
+            'date_of_birth' => '1995-05-12',
+            'sex' => 'male',
+            'contact_number' => '09171234567',
             'email' => 'public-patient@example.test',
             'password' => 'password',
             'password_confirmation' => 'password',
@@ -33,7 +37,11 @@ class PatientRegistrationRoleTest extends TestCase
         $this->seedAccessControl();
 
         $this->post('/register', [
-            'name' => 'Role Injection',
+            'first_name' => 'Role',
+            'last_name' => 'Injection',
+            'date_of_birth' => '1992-10-20',
+            'sex' => 'female',
+            'contact_number' => '09177654321',
             'email' => 'role-injection@example.test',
             'password' => 'password',
             'password_confirmation' => 'password',

@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardRedirectController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PatientLookup\PatientLookupController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -27,3 +28,12 @@ Route::middleware(['auth', 'account.active'])->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::middleware(['auth', 'verified', 'account.active', 'permission:patients.lookup-qr', 'throttle:30,1'])
+    ->prefix('patient-lookup')
+    ->name('patient-lookup.')
+    ->group(function (): void {
+        Route::get('/', [PatientLookupController::class, 'index'])->name('index');
+        Route::post('/', [PatientLookupController::class, 'store'])->name('store');
+        Route::get('/{token}', [PatientLookupController::class, 'show'])->name('show');
+    });

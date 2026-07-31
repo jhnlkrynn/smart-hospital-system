@@ -17,6 +17,10 @@ The canonical implementation lives in `app/Support/AccessControl.php`.
 
 Doctors, nurses, pharmacists, laboratory staff, cashiers, hospital admins, and super admins may view their own employee profile through `/profile/employment`. This own-profile route does not grant employee-management permissions. Patient users have no employee-management access.
 
+## Phase 5 Patient Access
+
+Patient management is split between administrative registration, patient self-service, and QR lookup. Super Admin and Hospital Admin manage all patient records. Nurses can register and update patient profiles for intake support. Doctors can view identity and manage allergy or condition facts needed for care. Pharmacists and Laboratory Staff can use QR lookup and view identity for future care workflows. Cashiers can view basic patient identity only. Patients can view and update their own non-clinical profile and view their own QR card.
+
 ## Sensitive Permission Checks
 
 | Permission | Super Admin | Hospital Admin | Doctor | Nurse | Patient | Pharmacist | Laboratory Staff | Cashier |
@@ -24,6 +28,10 @@ Doctors, nurses, pharmacists, laboratory staff, cashiers, hospital admins, and s
 | `roles.manage` | Yes | No | No | No | No | No | No | No |
 | `permissions.manage` | Yes | No | No | No | No | No | No | No |
 | `patients.view-medical-records` | Yes | No | Yes, assigned | No | No | No | No | No |
+| `patients.manage-documents` | Yes | Yes | No | Yes | No | No | No | No |
+| `patients.download-documents` | Yes | Yes | No | No | No | No | No | No |
+| `patients.lookup-qr` | Yes | Yes | Yes | Yes | No | Yes | Yes | No |
+| `patients.view-qr` | Yes | Yes | Yes | Yes | Yes, own | Yes | No | No |
 | `medical-records.view` | Yes | No | Yes, assigned | No | No | No | No | No |
 | `medical-records.view-own` | Yes | No | No | No | Yes | No | No | No |
 | `payments.verify` | Yes | No | No | No | No | No | No | Yes |

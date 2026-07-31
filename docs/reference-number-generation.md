@@ -1,6 +1,6 @@
 # Reference Number Generation
 
-Phase 4 introduces `App\Services\ReferenceNumberService`.
+Phase 4 introduces `App\Services\ReferenceNumberService`. Phase 5 reuses the same service for patient numbers.
 
 ## Employee Numbers
 
@@ -11,6 +11,16 @@ EMP-YYYY-000001
 ```
 
 The year uses the Asia/Manila timezone.
+
+## Patient Numbers
+
+Format:
+
+```text
+PAT-YYYY-000001
+```
+
+The patient number is created when a patient profile is registered. It is separate from the QR lookup token and may be safely displayed on patient-facing cards and staff identity views.
 
 ## Collision Prevention
 

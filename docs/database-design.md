@@ -19,11 +19,11 @@ Generated reference numbers must be unique and indexed. They should be produced 
 | doctor_schedules | Doctor availability | doctor_id, day_of_week, starts_at, ends_at, slot_minutes, room, max_patients, effective_from, effective_until | FK doctor_id employees; index doctor/day; unique doctor/day/start/end/effective_from | Restrict delete after appointments |
 | doctor_unavailable_dates | Schedule exceptions | doctor_id, unavailable_date, reason | unique doctor/date; FK doctor_id | Restrict/delete only future unused |
 | hospital_services | Billable services | code, name, category, price, is_active | unique code; indexes category/is_active | No hard delete after billing |
-| patients | Patient profiles | user_id, patient_number, qr_token_hash, first_name, last_name, date_of_birth, sex, contact_number, address, blood_type | unique user_id, patient_number, qr_token_hash; indexes name/date_of_birth | Soft delete; QR token never stores PHI |
-| patient_emergency_contacts | Patient contacts | patient_id, name, relationship, phone, address, is_primary | FK patient_id cascade; index patient/is_primary | Cascade with patient only before real records |
-| patient_allergies | Allergies | patient_id, allergen, reaction, severity, noted_at | FK patient_id restrict; index patient/allergen | Do not hard delete after clinical use |
-| patient_conditions | Conditions | patient_id, condition_name, status, diagnosed_on, notes | FK patient_id restrict; index patient/status | Preserve history |
-| patient_documents | Private files | patient_id, uploaded_by, file_name, path, mime_type, size, visibility | FKs patient/user; index patient/visibility | Private storage; validate type/size |
+| patients | Patient profiles | user_id, patient_number, qr_token, first_name, middle_name, last_name, date_of_birth, sex, contact_number, address, blood_type, status | unique user_id, patient_number, qr_token; indexes name/date_of_birth/status | Soft delete; QR token never stores PHI |
+| patient_emergency_contacts | Patient contacts | patient_id, name, relationship, phone, email, address, is_primary | FK patient_id cascade; index patient/is_primary | Cascade with patient |
+| patient_allergies | Allergies | patient_id, allergy_type, allergen, reaction, severity, recorded_by, recorded_at | FKs patient/user; index patient/severity | Do not hard delete after clinical use |
+| patient_conditions | Conditions | patient_id, condition_name, status, diagnosed_on, resolved_on, recorded_by | FKs patient/user; index patient/status | Preserve history |
+| patient_documents | Private files | patient_id, uploaded_by, document_type, title, original_filename, stored_path, mime_type, size_bytes | FKs patient/user; index patient/type | Private storage; validate type/size |
 | appointments | Appointment bookings | appointment_number, patient_id, doctor_id, schedule_id, scheduled_date, starts_at, ends_at, status, reason, booked_by | unique appointment_number; unique doctor/date/start unless cancelled; indexes patient/doctor/status/date | No hard delete; status history required |
 | appointment_status_histories | Appointment status audit | appointment_id, old_status, new_status, changed_by, reason | FK appointment restrict; index appointment/created_at | Append-only |
 | queues | Visit queue | queue_number, appointment_id, patient_id, department_id, status, priority, called_at, completed_at | unique department/date/queue_number; indexes status/department | No hard delete |
@@ -88,3 +88,13 @@ Phase 4 adds:
 - `audit_logs` for append-only administrative audit records.
 
 The department-head foreign key is intentionally added after `employees` exists to avoid a circular migration dependency.
+
+## Phase 5 Implemented Tables
+
+Phase 5 adds:
+
+- `patients` with unique `patient_number`, unique QR lookup token, optional linked user account, demographic fields, patient status, registration date, creator/updater references, timestamps, and soft deletes.
+- `patient_emergency_contacts` for patient contacts with a single primary-contact flag enforced by application logic.
+- `patient_allergies` for allergy type, severity, reaction, notes, recorder, and recorded date.
+- `patient_conditions` for known conditions, status, diagnosis/resolution dates, notes, and recorder.
+- `patient_documents` for private metadata pointing to files in non-public local storage.
