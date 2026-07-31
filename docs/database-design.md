@@ -2,6 +2,8 @@
 
 Use `id` primary keys unless a future integration justifies UUIDs. Patient QR codes must store secure random lookup tokens, not raw patient data. Monetary values use `decimal(12,2)` or more precision where needed. Dates without times use `date`; workflow moments use nullable timestamps. Do not store calculated age.
 
+Phase 10 adds medication catalog, prescription, allergy warning, pharmacy purchase, stock batch, reservation, transfer, adjustment, stock count, and inventory ledger tables. Inventory is batch-first and keeps reservations separate from on-hand quantity so Phase 11 dispensing can consume reserved stock cleanly.
+
 Generated reference numbers must be unique and indexed. They should be produced through a reusable `ReferenceNumberService` using a transaction, a per-prefix/year or per-prefix/date sequence table or row lock, and a final unique database constraint retry. Do not use table row counts as the only sequence source.
 
 ## Table Plan

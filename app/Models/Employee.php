@@ -84,6 +84,11 @@ class Employee extends Model
         return $this->hasMany(LaboratoryRequest::class, 'requesting_doctor_employee_id');
     }
 
+    public function prescriptions(): HasMany
+    {
+        return $this->hasMany(Prescription::class, 'doctor_employee_id');
+    }
+
     public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');

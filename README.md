@@ -4,6 +4,29 @@ This Laravel application is being developed as a modular Smart Hospital Manageme
 
 Phase 2 adds the technical planning layer before implementation of the main modules. The planned architecture uses Blade, Tailwind CSS, Alpine.js, controllers, Form Requests, policies, service classes, PHP enums, Eloquent models, migrations, seeders, audit logging, and MySQL/MariaDB-backed normalized data.
 
+### Phase 10 Prescriptions and Pharmacy Inventory
+
+Phase 10 connects EMR consultations to prescription creation and pre-dispensing pharmacy inventory workflows. It adds medication catalog management, prescription finalization with allergy-warning acknowledgment, pharmacy purchase receiving, stock batches, reservations, adjustments, quarantine controls, inventory ledger entries, seed data, automated tests, and documentation.
+
+Key routes:
+
+- `/admin/medications/catalog`
+- `/doctor/prescriptions`
+- `/pharmacist/prescriptions`
+- `/pharmacist/inventory`
+- `/pharmacist/purchases`
+- `/patient/prescriptions`
+
+Phase 10 docs:
+
+- [Medication Catalog](docs/medication-catalog.md)
+- [Prescription Management](docs/prescription-management.md)
+- [Prescription Allergy Warnings](docs/prescription-allergy-warnings.md)
+- [Pharmacy Inventory](docs/pharmacy-inventory.md)
+- [Pharmacy Purchases](docs/pharmacy-purchases.md)
+- [Inventory Transaction Ledger](docs/inventory-transaction-ledger.md)
+- [Pharmacy Security](docs/pharmacy-security.md)
+
 ### Phase 2 Documentation
 
 - [Architecture](docs/architecture.md)

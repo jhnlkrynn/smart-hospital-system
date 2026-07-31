@@ -2,6 +2,15 @@
 
 The canonical implementation lives in `app/Support/AccessControl.php`.
 
+Phase 10 pharmacy permissions:
+
+- Doctors: view medications and create/finalize/cancel/replace assigned prescriptions.
+- Pharmacists: review prescriptions, reserve stock, receive purchases, adjust/quarantine inventory, manage suppliers, and manage the catalog.
+- Hospital admins: manage catalog, suppliers, purchases, pharmacy locations, and inventory reports.
+- Patients: view and download their own prescriptions.
+
+Dispensing permissions from earlier placeholders are not used by Phase 10 and remain reserved for Phase 11.
+
 | Role | Permission scope |
 | --- | --- |
 | Super Admin | All permissions. |

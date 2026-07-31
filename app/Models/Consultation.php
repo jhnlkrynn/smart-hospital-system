@@ -80,6 +80,11 @@ class Consultation extends Model
         return $this->hasMany(LaboratoryRequest::class);
     }
 
+    public function prescriptions(): HasMany
+    {
+        return $this->hasMany(Prescription::class);
+    }
+
     public function scopeForDoctor(Builder $query, mixed $doctorId): Builder
     {
         return $query->where('doctor_employee_id', $doctorId);

@@ -5,6 +5,7 @@ use App\Http\Controllers\Patient\MedicalRecordController;
 use App\Http\Controllers\Patient\PatientAppointmentController;
 use App\Http\Controllers\Patient\PatientLaboratoryResultController;
 use App\Http\Controllers\Patient\PatientProfileController;
+use App\Http\Controllers\Patient\PatientPrescriptionController;
 use App\Http\Controllers\Patient\PatientQueueController;
 use Illuminate\Support\Facades\Route;
 
@@ -57,4 +58,10 @@ Route::middleware(['auth', 'verified', 'account.active', 'role:patient', 'permis
         Route::get('/laboratory-results/{result}/download', [PatientLaboratoryResultController::class, 'download'])
             ->middleware('permission:laboratory-results.download')
             ->name('laboratory-results.download');
+        Route::get('/prescriptions', [PatientPrescriptionController::class, 'index'])
+            ->middleware('permission:prescriptions.view-own')
+            ->name('prescriptions.index');
+        Route::get('/prescriptions/{prescription}', [PatientPrescriptionController::class, 'show'])
+            ->middleware('permission:prescriptions.view-own')
+            ->name('prescriptions.show');
     });

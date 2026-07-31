@@ -116,6 +116,11 @@ class Patient extends Model
         return $this->hasMany(LaboratoryResult::class);
     }
 
+    public function prescriptions(): HasMany
+    {
+        return $this->hasMany(Prescription::class);
+    }
+
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('status', PatientStatus::Active->value);

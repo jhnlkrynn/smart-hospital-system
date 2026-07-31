@@ -9,6 +9,7 @@ use App\Http\Controllers\Doctor\DoctorQueueController;
 use App\Http\Controllers\Doctor\DoctorScheduleController;
 use App\Http\Controllers\Doctor\MedicalCertificateController;
 use App\Http\Controllers\Doctor\LaboratoryRequestController;
+use App\Http\Controllers\Doctor\PrescriptionController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified', 'account.active', 'role:doctor', 'permission:dashboard.doctor'])
@@ -102,4 +103,26 @@ Route::middleware(['auth', 'verified', 'account.active', 'role:doctor', 'permiss
         Route::post('/laboratory-results/{result}/acknowledge', [LaboratoryRequestController::class, 'acknowledge'])
             ->middleware('permission:laboratory-results.acknowledge')
             ->name('laboratory-results.acknowledge');
+
+        Route::get('/prescriptions', [PrescriptionController::class, 'index'])
+            ->middleware('permission:prescriptions.view-assigned')
+            ->name('prescriptions.index');
+        Route::get('/consultations/{consultation}/prescriptions/create', [PrescriptionController::class, 'create'])
+            ->middleware('permission:prescriptions.create')
+            ->name('consultations.prescriptions.create');
+        Route::post('/consultations/{consultation}/prescriptions', [PrescriptionController::class, 'store'])
+            ->middleware('permission:prescriptions.create')
+            ->name('consultations.prescriptions.store');
+        Route::get('/prescriptions/{prescription}', [PrescriptionController::class, 'show'])
+            ->middleware('permission:prescriptions.view-assigned')
+            ->name('prescriptions.show');
+        Route::post('/prescriptions/{prescription}/warnings/{warning}/acknowledge', [PrescriptionController::class, 'acknowledge'])
+            ->middleware('permission:prescriptions.finalize')
+            ->name('prescriptions.warnings.acknowledge');
+        Route::post('/prescriptions/{prescription}/finalize', [PrescriptionController::class, 'finalize'])
+            ->middleware('permission:prescriptions.finalize')
+            ->name('prescriptions.finalize');
+        Route::post('/prescriptions/{prescription}/cancel', [PrescriptionController::class, 'cancel'])
+            ->middleware('permission:prescriptions.cancel')
+            ->name('prescriptions.cancel');
     });

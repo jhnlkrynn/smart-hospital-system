@@ -2,14 +2,14 @@
     'title' => 'Pharmacist Dashboard',
     'subtitle' => 'Pharmacy workspace for prescriptions, medicines, batches, suppliers, inventory, and dispensing.',
     'primary' => [
-        'title' => 'Dispensing and Inventory Access',
-        'description' => 'Pharmacists can work with prescription dispensing and inventory, without complete consultation-note access.',
+        'title' => 'Prescription Review and Inventory',
+        'description' => 'Pharmacists can review finalized prescriptions, reserve stock, receive purchases, adjust batches, and quarantine inventory before Phase 11 dispensing.',
     ],
     'cards' => [
-        ['title' => 'Prescriptions to Dispense', 'description' => 'Upcoming active prescription queue.'],
-        ['title' => 'Medicines', 'description' => 'Upcoming medicine catalog.'],
-        ['title' => 'Inventory', 'description' => 'Upcoming stock ledger and batch controls.'],
-        ['title' => 'Low Stock', 'description' => 'Upcoming low-stock monitoring.'],
-        ['title' => 'Expiration Monitoring', 'description' => 'Upcoming expiring batch alerts.'],
+        ['title' => 'Prescription Review', 'description' => 'Open finalized prescriptions for pharmacy review and stock reservation.'],
+        ['title' => 'Medication Catalog', 'description' => 'Maintain formulary medications, dosage forms, routes, units, and safety flags.'],
+        ['title' => 'Inventory Batches', 'description' => 'Track on-hand and reserved quantities by batch, location, lot, and expiry.'],
+        ['title' => 'Purchase Receiving', 'description' => 'Receive supplier purchase orders directly into stock batches.'],
+        ['title' => 'Stock Controls', 'description' => 'Record adjustments, quarantine batches, and review the inventory transaction ledger.'],
     ],
 ])

@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ConsultationController as AdminConsultationContro
 use App\Http\Controllers\Admin\DiagnosisCatalogController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\LaboratoryCatalogController;
+use App\Http\Controllers\Admin\MedicationCatalogController;
 use App\Http\Controllers\Admin\AppointmentController;
 use App\Http\Controllers\Admin\AppointmentTypeController;
 use App\Http\Controllers\Admin\DoctorScheduleController;
@@ -231,5 +232,15 @@ Route::middleware(['auth', 'verified', 'account.active'])->group(function (): vo
             Route::post('laboratory/tests/{test}/reference-ranges', [LaboratoryCatalogController::class, 'addReferenceRange'])
                 ->middleware('permission:laboratory-tests.manage-reference-ranges')
                 ->name('laboratory.tests.reference-ranges.store');
+
+            Route::get('medications/catalog', [MedicationCatalogController::class, 'index'])
+                ->middleware('permission:medications.view')
+                ->name('medications.catalog.index');
+            Route::post('medications/catalog', [MedicationCatalogController::class, 'store'])
+                ->middleware('permission:medications.create')
+                ->name('medications.catalog.store');
+            Route::delete('medications/catalog/{medication}', [MedicationCatalogController::class, 'destroy'])
+                ->middleware('permission:medications.archive')
+                ->name('medications.catalog.destroy');
         });
 });

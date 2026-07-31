@@ -1,5 +1,23 @@
 # Entity Relationship Diagram
 
+Phase 10 pharmacy and prescription addition:
+
+```mermaid
+erDiagram
+    CONSULTATIONS ||--o{ PRESCRIPTIONS : creates
+    PATIENTS ||--o{ PRESCRIPTIONS : owns
+    EMPLOYEES ||--o{ PRESCRIPTIONS : prescribes
+    PRESCRIPTIONS ||--o{ PRESCRIPTION_ITEMS : contains
+    MEDICATIONS ||--o{ PRESCRIPTION_ITEMS : prescribed
+    PRESCRIPTIONS ||--o{ PRESCRIPTION_ALLERGY_WARNINGS : raises
+    MEDICATIONS ||--o{ MEDICATION_STOCK_BATCHES : stocked
+    PHARMACY_LOCATIONS ||--o{ MEDICATION_STOCK_BATCHES : stores
+    PHARMACY_PURCHASES ||--o{ PHARMACY_PURCHASE_ITEMS : orders
+    PHARMACY_PURCHASE_ITEMS ||--o{ MEDICATION_STOCK_BATCHES : receives
+    PRESCRIPTION_ITEMS ||--o{ PHARMACY_STOCK_RESERVATIONS : reserves
+    MEDICATION_STOCK_BATCHES ||--o{ PHARMACY_INVENTORY_TRANSACTIONS : logs
+```
+
 ```mermaid
 erDiagram
     USERS ||--o| EMPLOYEES : owns

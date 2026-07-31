@@ -49,6 +49,41 @@ class ReferenceNumberService
         return $this->generate('ACC', now('Asia/Manila')->format('Ymd'), 5);
     }
 
+    public function medicationNumber(): string
+    {
+        return $this->generate('MED', now('Asia/Manila')->format('Y'), 6);
+    }
+
+    public function prescriptionNumber(): string
+    {
+        return $this->generate('RX', now('Asia/Manila')->format('Ymd'), 5);
+    }
+
+    public function pharmacySupplierNumber(): string
+    {
+        return $this->generate('SUP', now('Asia/Manila')->format('Y'), 6);
+    }
+
+    public function pharmacyPurchaseNumber(): string
+    {
+        return $this->generate('PO', now('Asia/Manila')->format('Ymd'), 5);
+    }
+
+    public function pharmacyTransferNumber(): string
+    {
+        return $this->generate('TRF', now('Asia/Manila')->format('Ymd'), 5);
+    }
+
+    public function stockCountNumber(): string
+    {
+        return $this->generate('SC', now('Asia/Manila')->format('Ymd'), 5);
+    }
+
+    public function inventoryTransactionNumber(): string
+    {
+        return $this->generate('INVTXN', now('Asia/Manila')->format('Ymd'), 6);
+    }
+
     public function generate(string $prefix, string $period, int $padding = 6): string
     {
         return DB::transaction(function () use ($prefix, $period, $padding): string {

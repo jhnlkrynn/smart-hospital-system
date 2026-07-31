@@ -2,6 +2,16 @@
 
 Phase 4 introduces `App\Services\ReferenceNumberService`. Phase 5 reuses the same service for patient numbers.
 
+## Phase 10 Pharmacy Numbers
+
+- `MED-{year}-000001` for medications.
+- `RX-{yyyymmdd}-00001` for prescriptions.
+- `SUP-{year}-000001` for pharmacy suppliers.
+- `PO-{yyyymmdd}-00001` for pharmacy purchases.
+- `TRF-{yyyymmdd}-00001` for stock transfers.
+- `SC-{yyyymmdd}-00001` for stock counts.
+- `INVTXN-{yyyymmdd}-000001` for inventory ledger entries.
+
 ## Employee Numbers
 
 Format:

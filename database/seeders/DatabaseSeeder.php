@@ -34,6 +34,19 @@ class DatabaseSeeder extends Seeder
             LaboratoryTestCategorySeeder::class,
             LaboratoryTestSeeder::class,
             LaboratoryReferenceRangeSeeder::class,
+            MedicationCategorySeeder::class,
+            DosageFormSeeder::class,
+            MedicationRouteSeeder::class,
+            MedicationUnitSeeder::class,
+            MedicationFrequencySeeder::class,
+            MedicationManufacturerSeeder::class,
+            PharmacySupplierSeeder::class,
+            MedicationSeeder::class,
+            PharmacyLocationSeeder::class,
+            PharmacyInventorySeeder::class,
+            PharmacyPurchaseSeeder::class,
+            PrescriptionSeeder::class,
+            StockCountSeeder::class,
         ]);
     }
 }
