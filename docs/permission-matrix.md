@@ -56,8 +56,11 @@ Legend: `Full` means unrestricted within the application. `Dept` means departmen
 | appointments.restore | Full | Full | None | None | None | None | None | None |
 | appointments.manage-all | Full | Full | None | None | None | None | None | None |
 | queues.view | Full | Full | Assigned | Dept | Own | None | None | None |
+| queues.view-own-status | None | None | None | None | Own | None | None | None |
 | queues.manage | Full | Full | None | Dept | None | None | None | None |
 | queues.call | Full | Full | None | Dept | None | None | None | None |
+| queues.recall | Full | Full | None | Dept | None | None | None | None |
+| queues.skip | Full | Full | None | Dept | None | None | None | None |
 | queues.transfer | Full | Full | None | Dept | None | None | None | None |
 | queues.complete | Full | Full | Assigned | Dept | None | None | None | None |
 | triage.view | Full | Full | Assigned | Dept | Own | None | None | None |

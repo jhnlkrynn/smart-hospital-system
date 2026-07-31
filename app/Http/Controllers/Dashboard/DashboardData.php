@@ -33,6 +33,7 @@ trait DashboardData
                 'Doctor schedules and appointment booking',
             ],
             'appointmentMetrics' => $this->appointmentMetrics($user, $roleSlug),
+            'queueMetrics' => $this->queueMetrics($user, $roleSlug),
         ];
     }
 
@@ -61,6 +62,34 @@ trait DashboardData
             'pending_requests' => (clone $query)->where('status', 'pending')->count(),
             'approved_today' => (clone $query)->whereDate('appointment_date', $today)->where('status', 'approved')->count(),
             'upcoming' => (clone $query)->whereDate('appointment_date', '>=', $today)->count(),
+        ];
+    }
+
+    /**
+     * @return array<string, int>
+     */
+    private function queueMetrics(User $user, string $roleSlug): array
+    {
+        if (! Schema::hasTable('queues')) {
+            return [];
+        }
+
+        $today = now('Asia/Manila')->toDateString();
+        $query = DB::table('queues')->whereNull('deleted_at')->whereDate('queue_date', $today);
+
+        if ($roleSlug === 'doctor' && $user->employee) {
+            $query->where('doctor_employee_id', $user->employee->id);
+        }
+
+        if ($roleSlug === 'patient' && $user->patient) {
+            $query->where('patient_id', $user->patient->id);
+        }
+
+        return [
+            'waiting' => (clone $query)->where('status', 'waiting')->count(),
+            'called' => (clone $query)->where('status', 'called')->count(),
+            'triaged' => (clone $query)->where('status', 'triaged')->count(),
+            'completed' => (clone $query)->where('status', 'completed')->count(),
         ];
     }
 }

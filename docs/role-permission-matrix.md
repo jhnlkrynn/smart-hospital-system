@@ -25,6 +25,10 @@ Patient management is split between administrative registration, patient self-se
 
 Super Admin has full schedule and appointment access. Hospital Admin can manage doctor schedules, exceptions, appointment types, and all appointments without gaining protected Super Admin account privileges. Doctors can view their own schedule and assigned appointments, and can approve, reject, complete, or mark assigned appointments no-show where permitted. Nurses can view schedules and create/reschedule/cancel patient appointments. Patients can book, view, cancel, and reschedule only their own appointments. Pharmacists, Laboratory Staff, and Cashiers do not receive appointment-management access by default.
 
+## Phase 7 Queue and Triage Access
+
+Nurses manage queue check-in, walk-ins, calling, triage, and vital-sign recording. Doctors view and complete their own assigned doctor queue. Patients view only their own queue status. Queue numbers, queue priorities, status timestamps, triage actors, and BMI are generated or enforced server-side.
+
 ## Sensitive Permission Checks
 
 | Permission | Super Admin | Hospital Admin | Doctor | Nurse | Patient | Pharmacist | Laboratory Staff | Cashier |

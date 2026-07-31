@@ -26,10 +26,10 @@ Generated reference numbers must be unique and indexed. They should be produced 
 | patient_documents | Private files | patient_id, uploaded_by, document_type, title, original_filename, stored_path, mime_type, size_bytes | FKs patient/user; index patient/type | Private storage; validate type/size |
 | appointments | Appointment bookings | appointment_number, patient_id, doctor_employee_id, department_id, appointment_type_id, appointment_date, start_time, end_time, duration_minutes, status, source, reasons/notes, actor timestamps, parent_appointment_id | unique appointment_number; indexes patient/date, doctor/date, department/date, status/date | Soft delete; status history required |
 | appointment_status_histories | Appointment status audit | appointment_id, old_status, new_status, changed_by, reason | FK appointment; index appointment/created_at | Append-style transition history |
-| queues | Visit queue | queue_number, appointment_id, patient_id, department_id, status, priority, called_at, completed_at | unique department/date/queue_number; indexes status/department | No hard delete |
-| queue_status_histories | Queue status audit | queue_id, old_status, new_status, changed_by, notes | FK queue restrict; index queue/created_at | Append-only |
-| triage_records | Triage assessment | appointment_id, patient_id, nurse_id, category, chief_complaint, notes | FKs appointment/patient/nurse; index category | No hard delete |
-| vital_signs | Vitals | patient_id, appointment_id, recorded_by, temperature, blood_pressure_systolic, blood_pressure_diastolic, pulse, respiration, oxygen_saturation, weight, height, recorded_at | FKs patient/appointment/user; index patient/recorded_at | No hard delete |
+| queues | Visit queue | queue_number, appointment_id, patient_id, doctor_employee_id, department_id, queue_date, status, priority, visit_type, priority flags, timestamps | unique queue_number and appointment_id; indexes department/date/status, doctor/date/status, patient/date | Soft delete; no force-delete route |
+| queue_status_histories | Queue status audit | queue_id, old_status, new_status, changed_by, notes | FK queue; index queue/created_at | Append-style transition history |
+| triage_records | Triage assessment | queue_id, appointment_id, patient_id, nurse_id, chief_complaint, pain_scale, pregnancy_flag, fall_risk_score, fall_risk_level, acuity, allergy review | FKs queue/appointment/patient/nurse; index patient/created_at | Soft delete; preserve clinical intake |
+| vital_signs | Vitals | queue_id, triage_record_id, patient_id, recorded_by, BP, pulse, respiration, temperature, SpO2, height, weight, BMI, measured_at | FKs queue/triage/patient/user; index patient/measured_at | Soft delete; BMI server-calculated |
 | consultations | Doctor encounter | consultation_number, appointment_id, patient_id, doctor_id, status, subjective, objective, assessment, plan, finalized_at | unique consultation_number; unique appointment_id; indexes doctor/status | Finalized records require amendments |
 | medical_records | Longitudinal record entries | patient_id, consultation_id, record_type, summary, details, created_by, finalized_at | FKs patient/consultation/user; index patient/type | No hard delete |
 | medical_record_amendments | Amendments | medical_record_id, amended_by, reason, old_values, new_values | FK medical_record restrict; index record | Append-only |
@@ -108,3 +108,12 @@ Phase 6 adds:
 - `doctor_schedule_exceptions` with doctor employee, exception date, optional custom hours, exception type, availability flag, daily maximum override, reason, creator/updater references, timestamps, and soft deletes.
 - `appointments` with unique appointment number, patient, doctor employee, department, appointment type, date/time range, duration, status, source, notes/reasons, status actor timestamps, parent reschedule link, creator/updater references, timestamps, and soft deletes.
 - `appointment_status_histories` for appointment transition history.
+
+## Phase 7 Implemented Tables
+
+Phase 7 adds:
+
+- `queues` for appointment check-in and walk-in operational queues.
+- `queue_status_histories` for queue status transitions.
+- `triage_records` for nurse clinical intake data.
+- `vital_signs` for BP, pulse, respiration, temperature, oxygen saturation, height, weight, and BMI.

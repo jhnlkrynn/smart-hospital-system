@@ -32,6 +32,16 @@ APT-YYYY-000001
 
 The appointment number is generated when the booking transaction creates the appointment. It is never accepted from patient or staff form input.
 
+## Queue Numbers
+
+Format:
+
+```text
+DEPT-YYYYMMDD-001
+```
+
+The department code is the prefix, and the date uses the Asia/Manila timezone. Queue numbers are generated when an appointment is checked in or a walk-in patient is added to the queue.
+
 ## Collision Prevention
 
 The service uses the `reference_sequences` table:

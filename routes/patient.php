@@ -3,6 +3,7 @@
 use App\Http\Controllers\Dashboard\PatientDashboardController;
 use App\Http\Controllers\Patient\PatientAppointmentController;
 use App\Http\Controllers\Patient\PatientProfileController;
+use App\Http\Controllers\Patient\PatientQueueController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified', 'account.active', 'role:patient', 'permission:dashboard.patient'])
@@ -36,4 +37,7 @@ Route::middleware(['auth', 'verified', 'account.active', 'role:patient', 'permis
         Route::post('/appointments/{appointment}/reschedule', [PatientAppointmentController::class, 'reschedule'])
             ->middleware('permission:appointments.reschedule')
             ->name('appointments.reschedule');
+        Route::get('/queues', [PatientQueueController::class, 'index'])
+            ->middleware('permission:queues.view-own-status')
+            ->name('queues.index');
     });

@@ -76,6 +76,21 @@ class Patient extends Model
         return $this->hasMany(Appointment::class);
     }
 
+    public function queues(): HasMany
+    {
+        return $this->hasMany(PatientQueue::class);
+    }
+
+    public function triageRecords(): HasMany
+    {
+        return $this->hasMany(TriageRecord::class);
+    }
+
+    public function vitalSigns(): HasMany
+    {
+        return $this->hasMany(VitalSign::class);
+    }
+
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('status', PatientStatus::Active->value);

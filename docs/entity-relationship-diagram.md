@@ -23,6 +23,9 @@ erDiagram
     APPOINTMENTS ||--o{ APPOINTMENT_STATUS_HISTORIES : transitions
     APPOINTMENTS ||--o{ APPOINTMENTS : rescheduled_to
     APPOINTMENTS ||--o| QUEUES : creates
+    QUEUES ||--o{ QUEUE_STATUS_HISTORIES : transitions
+    QUEUES ||--o| TRIAGE_RECORDS : triaged_by
+    QUEUES ||--o{ VITAL_SIGNS : records
     APPOINTMENTS ||--o| TRIAGE_RECORDS : has
     PATIENTS ||--o{ VITAL_SIGNS : has
     APPOINTMENTS ||--o{ VITAL_SIGNS : records

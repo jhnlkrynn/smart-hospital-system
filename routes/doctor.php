@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Dashboard\DoctorDashboardController;
 use App\Http\Controllers\Doctor\DoctorAppointmentController;
+use App\Http\Controllers\Doctor\DoctorQueueController;
 use App\Http\Controllers\Doctor\DoctorScheduleController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,4 +29,13 @@ Route::middleware(['auth', 'verified', 'account.active', 'role:doctor', 'permiss
         Route::post('/appointments/{appointment}/complete', [DoctorAppointmentController::class, 'complete'])
             ->middleware('permission:appointments.complete')
             ->name('appointments.complete');
+        Route::get('/queues', [DoctorQueueController::class, 'index'])
+            ->middleware('permission:queues.view')
+            ->name('queues.index');
+        Route::post('/queues/{queue}/start', [DoctorQueueController::class, 'start'])
+            ->middleware('permission:queues.complete')
+            ->name('queues.start');
+        Route::post('/queues/{queue}/complete', [DoctorQueueController::class, 'complete'])
+            ->middleware('permission:queues.complete')
+            ->name('queues.complete');
     });

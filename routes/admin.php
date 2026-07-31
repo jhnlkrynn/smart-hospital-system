@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AppointmentController;
 use App\Http\Controllers\Admin\AppointmentTypeController;
 use App\Http\Controllers\Admin\DoctorScheduleController;
 use App\Http\Controllers\Admin\PatientController;
+use App\Http\Controllers\Admin\QueueController;
 use App\Http\Controllers\Dashboard\HospitalAdminDashboardController;
 use App\Http\Controllers\Dashboard\SuperAdminDashboardController;
 use Illuminate\Support\Facades\Route;
@@ -166,5 +167,36 @@ Route::middleware(['auth', 'verified', 'account.active'])->group(function (): vo
             Route::post('appointments/{appointment}/no-show', [AppointmentController::class, 'markNoShow'])
                 ->middleware('permission:appointments.mark-no-show')
                 ->name('appointments.no-show');
+
+            Route::get('queues', [QueueController::class, 'index'])
+                ->middleware('permission:queues.view')
+                ->name('queues.index');
+            Route::get('queues/create', [QueueController::class, 'create'])
+                ->middleware('permission:queues.manage')
+                ->name('queues.create');
+            Route::post('queues', [QueueController::class, 'store'])
+                ->middleware('permission:queues.manage')
+                ->name('queues.store');
+            Route::get('queues/{queue}', [QueueController::class, 'show'])
+                ->middleware('permission:queues.view')
+                ->name('queues.show');
+            Route::post('appointments/{appointment}/check-in', [QueueController::class, 'checkIn'])
+                ->middleware('permission:appointments.check-in')
+                ->name('appointments.check-in');
+            Route::post('queues/departments/{department}/call-next', [QueueController::class, 'callNext'])
+                ->middleware('permission:queues.call')
+                ->name('queues.call-next');
+            Route::post('queues/{queue}/doctor', [QueueController::class, 'startDoctor'])
+                ->middleware('permission:queues.transfer')
+                ->name('queues.doctor');
+            Route::post('queues/{queue}/complete', [QueueController::class, 'complete'])
+                ->middleware('permission:queues.complete')
+                ->name('queues.complete');
+            Route::post('queues/{queue}/skip', [QueueController::class, 'skip'])
+                ->middleware('permission:queues.skip')
+                ->name('queues.skip');
+            Route::post('queues/{queue}/cancel', [QueueController::class, 'cancel'])
+                ->middleware('permission:queues.manage')
+                ->name('queues.cancel');
         });
 });

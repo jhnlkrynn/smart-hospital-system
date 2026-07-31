@@ -120,7 +120,26 @@ Scheduling routes:
 - `/doctor/appointments`
 - `/patient/appointments`
 
-Next phase: **Phase 7: Queue Management, Triage, and Vital Signs**.
+### Phase 7 Queue Management, Triage, and Vital Signs
+
+Phase 7 adds appointment check-in, walk-in queues, automatic queue numbers, priority handling, calling the next patient, nurse triage, vital-sign recording with BMI, allergy warnings, doctor queue views, patient queue status, dashboard queue metrics, audit logging, seeders, factories, tests, and documentation.
+
+Phase 7 docs:
+
+- [Queue Management](docs/queue-management.md)
+- [Triage and Vital Signs](docs/triage-and-vital-signs.md)
+- [Queue Status Workflow](docs/queue-status-workflow.md)
+- [Queue Security Rules](docs/queue-security-rules.md)
+
+Queue and triage routes:
+
+- `/admin/queues`
+- `/admin/queues/create`
+- `/nurse/triage`
+- `/doctor/queues`
+- `/patient/queues`
+
+Next phase: **Phase 8: Consultations, Diagnoses, and Electronic Medical Records**.
 
 ---
 
