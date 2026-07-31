@@ -8,7 +8,7 @@ erDiagram
     DEPARTMENTS ||--o{ EMPLOYEES : has
     EMPLOYEES ||--o| DEPARTMENTS : heads
     EMPLOYEES ||--o{ DOCTOR_SCHEDULES : doctor_has
-    EMPLOYEES ||--o{ DOCTOR_UNAVAILABLE_DATES : doctor_blocks
+    EMPLOYEES ||--o{ DOCTOR_SCHEDULE_EXCEPTIONS : doctor_blocks
     EMPLOYEES ||--o{ APPOINTMENTS : doctor_assigned
     PATIENTS ||--o{ PATIENT_EMERGENCY_CONTACTS : has
     PATIENTS ||--o{ PATIENT_ALLERGIES : has
@@ -19,6 +19,9 @@ erDiagram
     USERS ||--o{ PATIENT_CONDITIONS : records
     PATIENTS ||--o{ APPOINTMENTS : books
     DOCTOR_SCHEDULES ||--o{ APPOINTMENTS : provides_slot
+    APPOINTMENT_TYPES ||--o{ APPOINTMENTS : categorizes
+    APPOINTMENTS ||--o{ APPOINTMENT_STATUS_HISTORIES : transitions
+    APPOINTMENTS ||--o{ APPOINTMENTS : rescheduled_to
     APPOINTMENTS ||--o| QUEUES : creates
     APPOINTMENTS ||--o| TRIAGE_RECORDS : has
     PATIENTS ||--o{ VITAL_SIGNS : has

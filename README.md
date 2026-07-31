@@ -98,7 +98,29 @@ Administrative and patient routes:
 - `/patient/qr-card`
 - `/patient-lookup`
 
-Next phase: **Phase 6: Doctor Schedules and Appointments**.
+### Phase 6 Doctor Schedules and Appointment Scheduling
+
+Phase 6 adds appointment types, doctor weekly schedules, schedule exceptions, availability calculation, staff-assisted booking, patient self-booking, doctor appointment views, appointment status workflow, rescheduling history, dashboard metrics, audit logging, seeders, factories, and tests.
+
+Phase 6 docs:
+
+- [Appointment Management](docs/appointment-management.md)
+- [Doctor Schedule Management](docs/doctor-schedule-management.md)
+- [Appointment Status Workflow](docs/appointment-status-workflow.md)
+- [Appointment Availability Rules](docs/appointment-availability-rules.md)
+- [Appointment Concurrency](docs/appointment-concurrency.md)
+
+Scheduling routes:
+
+- `/admin/appointment-types`
+- `/admin/doctor-schedules`
+- `/admin/doctor-schedule-exceptions`
+- `/admin/appointments`
+- `/doctor/schedule`
+- `/doctor/appointments`
+- `/patient/appointments`
+
+Next phase: **Phase 7: Queue Management, Triage, and Vital Signs**.
 
 ---
 

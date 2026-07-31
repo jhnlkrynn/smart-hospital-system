@@ -36,6 +36,11 @@ class Department extends Model
         return $this->hasMany(Employee::class);
     }
 
+    public function appointments(): HasMany
+    {
+        return $this->hasMany(Appointment::class);
+    }
+
     public function activeEmployees(): HasMany
     {
         return $this->employees()->active();

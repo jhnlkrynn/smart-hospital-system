@@ -20,11 +20,21 @@
         ['permission' => 'employees.view', 'route' => 'admin.employees.index', 'label' => 'Employees'],
         ['permission' => 'patients.view', 'route' => 'admin.patients.index', 'label' => 'Patients'],
         ['permission' => 'patients.lookup-qr', 'route' => 'patient-lookup.index', 'label' => 'Patient QR Lookup'],
+        ['permission' => 'appointments.manage-all', 'route' => 'admin.appointment-types.index', 'label' => 'Appointment Types'],
+        ['permission' => 'doctor-schedules.manage-all', 'route' => 'admin.doctor-schedules.index', 'label' => 'Doctor Schedules'],
+        ['permission' => 'appointments.view', 'route' => 'admin.appointments.index', 'label' => 'Appointments'],
     ];
 
     $patientLinks = [
         ['permission' => 'patients.view-own-record', 'route' => 'patient.profile.show', 'label' => 'My Patient Profile'],
         ['permission' => 'patients.view-qr', 'route' => 'patient.qr-card', 'label' => 'My QR Card'],
+        ['permission' => 'appointments.create', 'route' => 'patient.appointments.create', 'label' => 'Book Appointment'],
+        ['permission' => 'appointments.view-own', 'route' => 'patient.appointments.index', 'label' => 'My Appointments'],
+    ];
+
+    $doctorLinks = [
+        ['permission' => 'doctor-schedules.view', 'route' => 'doctor.schedule.index', 'label' => 'My Schedule'],
+        ['permission' => 'appointments.view-assigned', 'route' => 'doctor.appointments.index', 'label' => 'My Appointments'],
     ];
 @endphp
 
@@ -56,6 +66,15 @@
                         @can($link['permission'])
                             @if (Route::has($link['route']))
                                 <x-nav-link :href="route($link['route'])" :active="request()->routeIs($link['route'])">
+                                    {{ $link['label'] }}
+                                </x-nav-link>
+                            @endif
+                        @endcan
+                    @endforeach
+                    @foreach ($doctorLinks as $link)
+                        @can($link['permission'])
+                            @if (Route::has($link['route']))
+                                <x-nav-link :href="route($link['route'])" :active="request()->routeIs($link['route'].'*')">
                                     {{ $link['label'] }}
                                 </x-nav-link>
                             @endif
@@ -127,6 +146,15 @@
                 @can($link['permission'])
                     @if (Route::has($link['route']))
                         <x-responsive-nav-link :href="route($link['route'])" :active="request()->routeIs($link['route'])">
+                            {{ $link['label'] }}
+                        </x-responsive-nav-link>
+                    @endif
+                @endcan
+            @endforeach
+            @foreach ($doctorLinks as $link)
+                @can($link['permission'])
+                    @if (Route::has($link['route']))
+                        <x-responsive-nav-link :href="route($link['route'])" :active="request()->routeIs($link['route'].'*')">
                             {{ $link['label'] }}
                         </x-responsive-nav-link>
                     @endif

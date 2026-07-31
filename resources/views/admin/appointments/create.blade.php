@@ -1,0 +1,1 @@
+<x-app-layout><x-slot name="header"><h2 class="text-2xl font-semibold text-gray-950">Create Appointment</h2></x-slot><div class="py-8"><div class="mx-auto max-w-4xl px-4"><form method="POST" action="{{ route('admin.appointments.store') }}" class="rounded-lg border bg-white p-6 shadow-sm">@include('admin.appointments._form')</form></div></div></x-app-layout>

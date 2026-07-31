@@ -17,6 +17,11 @@ class ReferenceNumberService
         return $this->generate('PAT', now('Asia/Manila')->format('Y'), 6);
     }
 
+    public function appointmentNumber(): string
+    {
+        return $this->generate('APT', now('Asia/Manila')->format('Y'), 6);
+    }
+
     public function generate(string $prefix, string $period, int $padding = 6): string
     {
         return DB::transaction(function () use ($prefix, $period, $padding): string {

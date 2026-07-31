@@ -51,6 +51,21 @@
                 </section>
             @endif
 
+            @if (! empty($appointmentMetrics))
+                <section>
+                    <div class="mb-4 flex items-center justify-between gap-4">
+                        <h2 class="text-lg font-semibold text-gray-950">Appointment Metrics</h2>
+                        <span class="text-sm text-gray-500">Live data</span>
+                    </div>
+                    <div class="grid gap-4 md:grid-cols-4">
+                        <div class="rounded-lg border bg-white p-4 shadow-sm"><dt class="text-sm text-gray-500">Today</dt><dd class="mt-2 text-2xl font-semibold">{{ $appointmentMetrics['appointments_today'] }}</dd></div>
+                        <div class="rounded-lg border bg-white p-4 shadow-sm"><dt class="text-sm text-gray-500">Pending</dt><dd class="mt-2 text-2xl font-semibold">{{ $appointmentMetrics['pending_requests'] }}</dd></div>
+                        <div class="rounded-lg border bg-white p-4 shadow-sm"><dt class="text-sm text-gray-500">Approved Today</dt><dd class="mt-2 text-2xl font-semibold">{{ $appointmentMetrics['approved_today'] }}</dd></div>
+                        <div class="rounded-lg border bg-white p-4 shadow-sm"><dt class="text-sm text-gray-500">Upcoming</dt><dd class="mt-2 text-2xl font-semibold">{{ $appointmentMetrics['upcoming'] }}</dd></div>
+                    </div>
+                </section>
+            @endif
+
             <section>
                 <div class="mb-4 flex items-center justify-between gap-4">
                     <h2 class="text-lg font-semibold text-gray-950">Accessible Work Areas</h2>

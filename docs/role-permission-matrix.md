@@ -21,6 +21,10 @@ Doctors, nurses, pharmacists, laboratory staff, cashiers, hospital admins, and s
 
 Patient management is split between administrative registration, patient self-service, and QR lookup. Super Admin and Hospital Admin manage all patient records. Nurses can register and update patient profiles for intake support. Doctors can view identity and manage allergy or condition facts needed for care. Pharmacists and Laboratory Staff can use QR lookup and view identity for future care workflows. Cashiers can view basic patient identity only. Patients can view and update their own non-clinical profile and view their own QR card.
 
+## Phase 6 Schedule and Appointment Access
+
+Super Admin has full schedule and appointment access. Hospital Admin can manage doctor schedules, exceptions, appointment types, and all appointments without gaining protected Super Admin account privileges. Doctors can view their own schedule and assigned appointments, and can approve, reject, complete, or mark assigned appointments no-show where permitted. Nurses can view schedules and create/reschedule/cancel patient appointments. Patients can book, view, cancel, and reschedule only their own appointments. Pharmacists, Laboratory Staff, and Cashiers do not receive appointment-management access by default.
+
 ## Sensitive Permission Checks
 
 | Permission | Super Admin | Hospital Admin | Doctor | Nurse | Patient | Pharmacist | Laboratory Staff | Cashier |
@@ -32,6 +36,11 @@ Patient management is split between administrative registration, patient self-se
 | `patients.download-documents` | Yes | Yes | No | No | No | No | No | No |
 | `patients.lookup-qr` | Yes | Yes | Yes | Yes | No | Yes | Yes | No |
 | `patients.view-qr` | Yes | Yes | Yes | Yes | Yes, own | Yes | No | No |
+| `doctor-schedules.manage-all` | Yes | Yes | No | No | No | No | No | No |
+| `doctor-schedules.manage-own` | Yes | No | Yes | No | No | No | No | No |
+| `appointments.manage-all` | Yes | Yes | No | No | No | No | No | No |
+| `appointments.view-assigned` | Yes | No | Yes | No | No | No | No | No |
+| `appointments.view-own` | Yes | No | No | No | Yes | No | No | No |
 | `medical-records.view` | Yes | No | Yes, assigned | No | No | No | No | No |
 | `medical-records.view-own` | Yes | No | No | No | Yes | No | No | No |
 | `payments.verify` | Yes | No | No | No | No | No | No | Yes |

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
@@ -53,6 +54,21 @@ class Employee extends Model
         return $this->hasOne(Department::class, 'department_head_employee_id');
     }
 
+    public function doctorSchedules(): HasMany
+    {
+        return $this->hasMany(DoctorSchedule::class, 'doctor_employee_id');
+    }
+
+    public function scheduleExceptions(): HasMany
+    {
+        return $this->hasMany(DoctorScheduleException::class, 'doctor_employee_id');
+    }
+
+    public function doctorAppointments(): HasMany
+    {
+        return $this->hasMany(Appointment::class, 'doctor_employee_id');
+    }
+
     public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
@@ -66,6 +82,11 @@ class Employee extends Model
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('employment_status', EmploymentStatus::Active->value);
+    }
+
+    public function scopeDoctors(Builder $query): Builder
+    {
+        return $query->whereHas('user.roles', fn (Builder $query) => $query->where('name', 'doctor'));
     }
 
     public function scopeByDepartment(Builder $query, mixed $departmentId): Builder

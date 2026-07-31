@@ -71,6 +71,11 @@ class Patient extends Model
         return $this->hasMany(PatientDocument::class);
     }
 
+    public function appointments(): HasMany
+    {
+        return $this->hasMany(Appointment::class);
+    }
+
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('status', PatientStatus::Active->value);

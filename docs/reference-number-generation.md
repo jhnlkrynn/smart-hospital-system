@@ -22,6 +22,16 @@ PAT-YYYY-000001
 
 The patient number is created when a patient profile is registered. It is separate from the QR lookup token and may be safely displayed on patient-facing cards and staff identity views.
 
+## Appointment Numbers
+
+Format:
+
+```text
+APT-YYYY-000001
+```
+
+The appointment number is generated when the booking transaction creates the appointment. It is never accepted from patient or staff form input.
+
 ## Collision Prevention
 
 The service uses the `reference_sequences` table:

@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\Admin\AppointmentController;
+use App\Http\Controllers\Admin\AppointmentTypeController;
+use App\Http\Controllers\Admin\DoctorScheduleController;
 use App\Http\Controllers\Admin\PatientController;
 use App\Http\Controllers\Dashboard\HospitalAdminDashboardController;
 use App\Http\Controllers\Dashboard\SuperAdminDashboardController;
@@ -102,5 +105,66 @@ Route::middleware(['auth', 'verified', 'account.active'])->group(function (): vo
             Route::get('patients/{patient}/documents/{document}/download', [PatientController::class, 'downloadDocument'])
                 ->middleware('permission:patients.download-documents')
                 ->name('patients.documents.download');
+        });
+
+    Route::prefix('admin')
+        ->name('admin.')
+        ->middleware(['role:super-admin|hospital-admin|nurse'])
+        ->group(function (): void {
+            Route::resource('appointment-types', AppointmentTypeController::class)
+                ->parameters(['appointment-types' => 'appointmentType'])
+                ->middleware('permission:appointments.manage-all');
+
+            Route::resource('doctor-schedules', DoctorScheduleController::class)
+                ->parameters(['doctor-schedules' => 'doctorSchedule'])
+                ->middleware([
+                    'index' => 'permission:doctor-schedules.view',
+                    'show' => 'permission:doctor-schedules.view',
+                    'create' => 'permission:doctor-schedules.create',
+                    'store' => 'permission:doctor-schedules.create',
+                    'edit' => 'permission:doctor-schedules.update',
+                    'update' => 'permission:doctor-schedules.update',
+                    'destroy' => 'permission:doctor-schedules.archive',
+                ]);
+            Route::get('doctor-schedule-exceptions', [DoctorScheduleController::class, 'exceptions'])
+                ->middleware('permission:doctor-schedules.manage-exceptions')
+                ->name('doctor-schedule-exceptions.index');
+            Route::post('doctor-schedule-exceptions', [DoctorScheduleController::class, 'storeException'])
+                ->middleware('permission:doctor-schedules.manage-exceptions')
+                ->name('doctor-schedule-exceptions.store');
+
+            Route::get('appointments/slots', [AppointmentController::class, 'slots'])
+                ->middleware('permission:appointments.create')
+                ->name('appointments.slots');
+            Route::get('appointments', [AppointmentController::class, 'index'])
+                ->middleware('permission:appointments.view')
+                ->name('appointments.index');
+            Route::get('appointments/create', [AppointmentController::class, 'create'])
+                ->middleware('permission:appointments.create-for-patient')
+                ->name('appointments.create');
+            Route::post('appointments', [AppointmentController::class, 'store'])
+                ->middleware('permission:appointments.create-for-patient')
+                ->name('appointments.store');
+            Route::get('appointments/{appointment}', [AppointmentController::class, 'show'])
+                ->middleware('permission:appointments.view')
+                ->name('appointments.show');
+            Route::post('appointments/{appointment}/approve', [AppointmentController::class, 'approve'])
+                ->middleware('permission:appointments.approve')
+                ->name('appointments.approve');
+            Route::post('appointments/{appointment}/reject', [AppointmentController::class, 'reject'])
+                ->middleware('permission:appointments.reject')
+                ->name('appointments.reject');
+            Route::post('appointments/{appointment}/cancel', [AppointmentController::class, 'cancel'])
+                ->middleware('permission:appointments.cancel')
+                ->name('appointments.cancel');
+            Route::post('appointments/{appointment}/reschedule', [AppointmentController::class, 'reschedule'])
+                ->middleware('permission:appointments.reschedule')
+                ->name('appointments.reschedule');
+            Route::post('appointments/{appointment}/complete', [AppointmentController::class, 'complete'])
+                ->middleware('permission:appointments.complete')
+                ->name('appointments.complete');
+            Route::post('appointments/{appointment}/no-show', [AppointmentController::class, 'markNoShow'])
+                ->middleware('permission:appointments.mark-no-show')
+                ->name('appointments.no-show');
         });
 });
